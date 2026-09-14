@@ -4,13 +4,27 @@
   
   
   <entry>
-    <title>暴力破解</title>
+    <title>暴力破解学习笔记</title>
     <link href="/2026/09/14/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3/"/>
     <url>/2026/09/14/%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3/</url>
     
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<h1 id="暴力破解"><a href="#暴力破解" class="headerlink" title="暴力破解"></a>暴力破解</h1><h2 id="暴力破解原理"><a href="#暴力破解原理" class="headerlink" title="暴力破解原理"></a>暴力破解原理</h2><p>  暴力破解&#x3D;枚举所有候选账号与密码组合，逐一尝试，直到找到能通过验证的一组数据组合。<br>  本质是：用bq等程序自动遍历密码字典&#x2F;所有字符组合，把每一个候选的组合提交给对应的验证接口，判断是否验证成功。</p><h2 id="暴力破解实验"><a href="#暴力破解实验" class="headerlink" title="暴力破解实验"></a>暴力破解实验</h2><h3 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h3><p>  1.Window系统 2.pikachu靶场 3.Burp Suite</p><h3 id="基于表单的暴力破解"><a href="#基于表单的暴力破解" class="headerlink" title="基于表单的暴力破解"></a>基于表单的暴力破解</h3><p>1.找到对应靶场后，随便输入一组账号密码（例：账号：aaaaa；密码：111111）。<br><img src="C:\lpf-blog\blog-picture\Brute Force Attack1.png" alt="靶场随机输入" width="700"></p>]]></content>
     
     
+    <categories>
+      
+      <category>Web安全</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Web安全</tag>
+      
+      <tag>暴力破解</tag>
+      
+    </tags>
     
   </entry>
   
