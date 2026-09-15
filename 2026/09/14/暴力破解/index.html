@@ -48,7 +48,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/20.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/21.png">
 <meta property="article:published_time" content="2026-09-14T08:34:08.000Z">
-<meta property="article:modified_time" content="2026-09-15T09:05:37.148Z">
+<meta property="article:modified_time" content="2026-09-15T09:10:36.448Z">
 <meta property="article:author" content="llppff573">
 <meta property="article:tag" content="Web安全">
 <meta property="article:tag" content="暴力破解">
@@ -441,7 +441,7 @@ Intruder 是 Burp Suite里的**自动化自定义攻击模块**，用于自动�
 <li><p>攻击结束后，通过BP结果列表的<strong>响应长度、状态码、返回内容</strong>区分真伪结果。错误的账号密码请求响应长度基本一致，而正确的账号密码响应长度存在明显差异，通过筛选特殊响应数据，即可锁定合法的账号密码组合。</p>
 </li>
 </ol>
-<h2 id="四种攻击模式对比总结"><a href="#四种攻击模式对比总结" class="headerlink" title="四种攻击模式对比总结"></a>四种攻击模式对比总结</h2><p>本次实验完整测试了Burp Suite Intruder模块的四种暴力破解模式，四种模式适配场景、运行逻辑差异显著。Sniper模式适用于单参数漏洞测试和单点枚举，请求精准、冗余少；Battering ram模式仅适用于账号密码一致的特殊弱口令场景，请求量最少、效率最高，但适用范围极窄；Pitchfork模式为定向配对爆破，按顺序匹配双载荷，无多余请求，适合已知对应关系的批量测试；Cluster bomb模式采用全组合枚举，覆盖所有配对可能，破解成功率最高，但请求量最大、耗时最长，资源消耗最高。</p>
+<h3 id="四种攻击模式对比总结"><a href="#四种攻击模式对比总结" class="headerlink" title="四种攻击模式对比总结"></a>四种攻击模式对比总结</h3><p>本次实验完整测试了Burp Suite Intruder模块的四种暴力破解模式，四种模式适配场景、运行逻辑差异显著。Sniper模式适用于单参数漏洞测试和单点枚举，请求精准、冗余少；Battering ram模式仅适用于账号密码一致的特殊弱口令场景，请求量最少、效率最高，但适用范围极窄；Pitchfork模式为定向配对爆破，按顺序匹配双载荷，无多余请求，适合已知对应关系的批量测试；Cluster bomb模式采用全组合枚举，覆盖所有配对可能，破解成功率最高，但请求量最大、耗时最长，资源消耗最高。</p>
 <h3 id="验证码绕过-on-client"><a href="#验证码绕过-on-client" class="headerlink" title="验证码绕过(on client)"></a>验证码绕过(on client)</h3><p><strong>原理</strong>：后端生成验证码，校验通过之后没有销毁验证码session，同一个验证码可以反复提交多次登录请求。</p>
 <p><strong>利用方法</strong></p>
 <ol>
