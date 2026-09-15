@@ -42,8 +42,13 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/14.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/15.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/16.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/17.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/18.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/19.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/20.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/21.png">
 <meta property="article:published_time" content="2026-09-14T08:34:08.000Z">
-<meta property="article:modified_time" content="2026-09-15T03:44:29.780Z">
+<meta property="article:modified_time" content="2026-09-15T09:05:37.148Z">
 <meta property="article:author" content="llppff573">
 <meta property="article:tag" content="Web安全">
 <meta property="article:tag" content="暴力破解">
@@ -344,7 +349,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.5k 字
+          3.7k 字
         
       </span>
     
@@ -355,7 +360,7 @@
         
         
         
-          22 分钟
+          31 分钟
         
       </span>
     
@@ -450,7 +455,16 @@ Intruder 是 Burp Suite里的**自动化自定义攻击模块**，用于自动�
 <blockquote>
 <p>补充：真正安全的验证码逻辑：验证码校验成功之后立刻销毁服务端session存储的验证码，该验证码只能使用1次。</p>
 </blockquote>
-<p><strong>实验内容</strong><br>1.同基于表单的暴力破解一样，先随机输入一组账号密码，但是需要输入正确的验证码，并在bp上找到对应的数据包发送到Repeater。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/12.png" srcset="/img/loading.gif" lazyload alt="随机输入账号密码和正确的验证码" width="700"/><br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/13.png" srcset="/img/loading.gif" lazyload alt="对应数据包" width="700"/><br>2.在Repeater界面将验证码分别修改为空，11111（任意），正确的验证码，观察其反馈。本页面仅提示username or password is not exists～所以并未对验证码进行验证。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/14.png" srcset="/img/loading.gif" lazyload alt="验证码1" width="700"/><br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/15.png" srcset="/img/loading.gif" lazyload alt="验证码2" width="700"/><br>3.将包发到Intruder，方式选择Cluster bomb，增加账号和密码的payload位置，不需要处理验证码，还是选择之前的两组字典，然后进行攻击，再根据长度找到验证成功的项。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/16.png" srcset="/img/loading.gif" lazyload alt="最后验证结果1" width="700"/></p>
+<p><strong>实验内容</strong></p>
+<ol>
+<li>同基于表单的暴力破解一样，先随机输入一组账号密码，但是需要输入正确的验证码，并在bp上找到对应的数据包发送到Repeater。<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/12.png" srcset="/img/loading.gif" lazyload alt="随机输入账号密码和正确的验证码" width="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/13.png" srcset="/img/loading.gif" lazyload alt="对应数据包" width="700"/>
+2.在Repeater界面将验证码分别修改为空，11111（任意），正确的验证码，观察其反馈。本页面仅提示username or password is not exists～所以并未对验证码进行验证。
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/14.png" srcset="/img/loading.gif" lazyload alt="验证码1" width="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/15.png" srcset="/img/loading.gif" lazyload alt="验证码2" width="700"/>
+3.将包发到Intruder，方式选择Cluster bomb，增加账号和密码的payload位置，不需要处理验证码，还是选择之前的两组字典，然后进行攻击，再根据长度找到验证成功的项。
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/16.png" srcset="/img/loading.gif" lazyload alt="最后验证结果1" width="700"/></li>
+</ol>
 <h3 id="验证码绕过（on-server）"><a href="#验证码绕过（on-server）" class="headerlink" title="验证码绕过（on server）"></a>验证码绕过（on server）</h3><p><strong>原理</strong>：验证码校验逻辑完全写在前端JS，后端没有对验证码做校验。服务端只校验账号密码，不管验证码参数是否正确、是否为空。</p>
 <p><strong>利用方法</strong></p>
 <ol>
@@ -462,6 +476,40 @@ Intruder 是 Burp Suite里的**自动化自定义攻击模块**，用于自动�
 <p>现象：即使页面提示验证码错误，只要数据包不带正确验证码，后端依旧完成账号密码校验。<br>风险点：开发者误以为前端验证码可以防护暴力破解，后端缺失二次校验，防护完全失效。</p>
 </blockquote>
 <p><strong>实验内容</strong></p>
+<ol>
+<li>输入正确的账号密码和验证码，反馈login success；输入错误的账号密码正确的验证码，反馈username or password is not exists～；输入错误的账号密码错误的验证码，反馈验证码输入错误哦！去bp找到对应的数据包，并发送到Repeater。并将验证码删除后直接发送，得到验证码不得为空，所以后端对验证码有校验。<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/17.png" srcset="/img/loading.gif" lazyload alt="验证反馈结果" width="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/18.png" srcset="/img/loading.gif" lazyload alt="验证反馈结果2" width="700"/></li>
+</ol>
+<p>2.判断验证码是否存在失效。刷新页面获取新的验证码。到Repeater中的数据包中输入本次获取的新验证码。提示username or password is not exists～并且在以后得每次输入只要未刷新页面就不会导致验证码错误，可以重复利用。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/19.png" srcset="/img/loading.gif" lazyload alt="验证码过期验证" width="700"/></p>
+<p>3.接下来进行暴力破解，将包发送到Intruder，然后验证码还是用刚才正确的验证码，方式选择Cluster bomb，还是将两个字典配置到payload集，进行攻击。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/20.png" srcset="/img/loading.gif" lazyload alt="server端暴力破解" width="700"/><br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/21.png" srcset="/img/loading.gif" lazyload alt="server端暴力破解2" width="700"/></p>
+<h3 id="token防爆破"><a href="#token防爆破" class="headerlink" title="token防爆破"></a>token防爆破</h3><p>很多网站为抵御暴力破解，登录接口会下发随机token，每次登录请求必须携带，用来防止批量爆破。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><ol>
+<li>访问登录页面，后端返回表单，同时返回一个随机token（放在隐藏表单、cookie、响应头）。</li>
+<li><strong>每一次登录请求都必须带上这个一次性token</strong>，服务端校验token合法，才会校验账号密码。</li>
+<li>token使用完成立即失效，每一次发包都要获取全新token；攻击者直接复用旧token会被服务端拒绝请求。</li>
+</ol>
+<h3 id="BP处理带token的登录爆破（Recursive-grep递归抓取）"><a href="#BP处理带token的登录爆破（Recursive-grep递归抓取）" class="headerlink" title="BP处理带token的登录爆破（Recursive grep递归抓取）"></a>BP处理带token的登录爆破（Recursive grep递归抓取）</h3><ol>
+<li>Proxy抓到登录数据包，发送到Intruder。</li>
+<li>Payload位置标记账号、密码。</li>
+<li>在<code>Options</code>选项卡找到 <code>Recursive grep</code>，配置，从登录页面响应包中提取新token。</li>
+<li>设置线程数为<strong>1</strong>，不可以多线程；多线程会造成token错乱失效。</li>
+<li>开始爆破：每发送一次请求后，BP自动重新请求登录页面，抓取新token，带入下一次登录数据包。</li>
+</ol>
+<h3 id="Token防护的缺陷"><a href="#Token防护的缺陷" class="headerlink" title="Token防护的缺陷"></a>Token防护的缺陷</h3><ul>
+<li>如果token和会话不绑定、token可以重复使用，防护直接失效，依旧可以暴力破解。</li>
+<li>开发错误：token仅做格式校验，不校验一次性有效性，只做一个摆设。</li>
+</ul>
+<h3 id="登录接口完整防护思路"><a href="#登录接口完整防护思路" class="headerlink" title="登录接口完整防护思路"></a>登录接口完整防护思路</h3><ol>
+<li>后端验证码，校验通过立即销毁，禁止重复使用。</li>
+<li>表单随机token，单次请求有效，一次用完作废。</li>
+<li>单IP、单账号错误次数限制，多次失败锁定账号。</li>
+<li>增加请求频率限流，拦截短时间大量请求。</li>
+<li>登录失败返回统一提示，不要区分“账号不存在”和“密码错误”，减少信息泄露。</li>
+</ol>
+<p><strong>实验内容</strong><br>1.打开靶场检查页面，找到对应的页面容器，观察前端代码。可以看到token还有它的值。</p>
+<ol start="2">
+<li>在宏里找到获取该页面的get请求，添加自定义参数，确认好攻击范围。<br> POST 请求包放到 Intruder，<code>username</code>、<code>password</code>加上 § 标记；<strong>token 参数千万不要加 § 符号</strong>（会话规则会自动覆盖替换 token 的值）然后开始攻击。</li>
+</ol>
 
                 
               </div>
