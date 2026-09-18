@@ -26,20 +26,20 @@
 <meta property="og:site_name" content="llppff573">
 <meta property="og:description" content="CSRF 跨站请求伪造CSRF 基本概念与原理CSRF（Cross‑Site‑Request‑Forgery）跨站请求伪造。漏洞核心：利用用户已经登录的浏览器会话，诱导用户访问恶意页面，在用户不知情的情况下，携带当前 Cookie 会话，自动发起后端请求，执行非本意的操作。  关键点：攻击者拿不到你的 Cookie，只是借用浏览器自动携带 Cookie 的特性完成请求。攻击条件：   用户处于登录">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/52.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/53.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/54.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/55.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/56.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/57.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/58.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/59.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/60.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/61.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/62.png">
 <meta property="article:published_time" content="2026-09-16T11:37:34.000Z">
-<meta property="article:modified_time" content="2026-09-16T13:07:39.381Z">
+<meta property="article:modified_time" content="2026-09-18T11:35:26.639Z">
 <meta property="article:author" content="llppff573">
 <meta property="article:tag" content="博客,笔记">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/52.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/55.png">
   
   
   
@@ -414,8 +414,8 @@
 </ul>
 <h2 id="CSRF-实验（pikachu-靶场）"><a href="#CSRF-实验（pikachu-靶场）" class="headerlink" title="CSRF 实验（pikachu 靶场）"></a>CSRF 实验（pikachu 靶场）</h2><h3 id="CSRF‑GET-型"><a href="#CSRF‑GET-型" class="headerlink" title="CSRF‑GET 型"></a>CSRF‑GET 型</h3><ol>
 <li><p>登录靶场账号，进入修改个人资料页面，修改任意一个信息，本次将地址改为：aaaa，观察修改信息抓包。<br>请求为 GET 请求，参数直接放在 URL 中，<strong>没有 token 校验</strong>。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/52.png" srcset="/img/loading.gif" lazyload alt="修改个人信息" idth="700"/>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/53.png" srcset="/img/loading.gif" lazyload alt="修改个人信息" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/55.png" srcset="/img/loading.gif" lazyload alt="修改个人信息" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/56.png" srcset="/img/loading.gif" lazyload alt="修改个人信息" idth="700"/>
 </li>
 <li><p>复制这次get请求的URL，构造恶意 URL，修改参数，用来篡改用户信息，本次修改的是地址信息，改为beijing。</p>
 </li>
@@ -423,21 +423,21 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">http://localhost:84/vul/csrf/csrfget/csrf_get_edit.php?sex=girl&amp;phonenum=1666660&amp;add=beijing&amp;email=lucy%40pikachu.com&amp;submit=submit<br></code></pre></td></tr></table></figure>
 
 <ol start="3">
-<li>当已经登录的受害者访问这条 URL，浏览器自动携带 Cookie，直接完成资料修改。我们假设我们是lucy，在浏览器中访问这个url。访问后发现lucy的地址变成立beijing。<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/54.png" srcset="/img/loading.gif" lazyload alt="修改个人信息" idth="700"/></li>
+<li>当已经登录的受害者访问这条 URL，浏览器自动携带 Cookie，直接完成资料修改。我们假设我们是lucy，在浏览器中访问这个url。访问后发现lucy的地址变成立beijing。<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/57.png" srcset="/img/loading.gif" lazyload alt="修改个人信息" idth="700"/></li>
 </ol>
 <blockquote>
 <p>特点：GET 型 CSRF，所有参数放在 URL，构造简单；很多现代网站关键操作不再使用 GET 做修改操作。</p>
 </blockquote>
 <h3 id="CSRF‑POST-型"><a href="#CSRF‑POST-型" class="headerlink" title="CSRF‑POST 型"></a>CSRF‑POST 型</h3><ol>
 <li><p>修改资料功能使用 POST 提交表单，将地址改为shanghai，找到其对应的数据包。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/55.png" srcset="/img/loading.gif" lazyload alt="修改地址信息" idth="700"/>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/56.png" srcset="/img/loading.gif" lazyload alt="修改地址信息post请求" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/58.png" srcset="/img/loading.gif" lazyload alt="修改地址信息" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/59.png" srcset="/img/loading.gif" lazyload alt="修改地址信息post请求" idth="700"/>
 </li>
 <li><p>把整个 Cookie 头<strong>删掉</strong>，直接发送 Repeater 重放。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs html">POST /vul/csrf/csrfpost/csrf_post_edit.php HTTP/1.1<br>Host: localhost:84<br>Content-Length: 78<br>Cache-Control: max-age=0<br>sec-ch-ua: &quot;-Not.A/Brand&quot;;v=&quot;8&quot;, &quot;Chromium&quot;;v=&quot;102&quot;<br>sec-ch-ua-mobile: ?0<br>sec-ch-ua-platform: &quot;Windows&quot;<br>Upgrade-Insecure-Requests: 1<br>Origin: http://localhost:84<br>Content-Type: application/x-www-form-urlencoded<br>User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36<br>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9<br>Sec-Fetch-Site: same-origin<br>Sec-Fetch-Mode: navigate<br>Sec-Fetch-User: ?1<br>Sec-Fetch-Dest: document<br>Referer: http://localhost:84/vul/csrf/csrfpost/csrf_post_edit.php<br>Accept-Encoding: gzip, deflate<br>Accept-Language: zh-CN,zh;q=0.9<br>Cookie: PHPSESSID=bkcjs33jbp821ljebokv51pakb<br>Connection: close<br><br>sex=girl&amp;phonenum=1666660&amp;add=tianjin&amp;email=lucy%40pikachu.com&amp;submit=submit<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>回到靶场刷新个人信息：资料依旧被修改</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/57.png" srcset="/img/loading.gif" lazyload alt="bp修改地址信息post请求" idth="700"/></li>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/60.png" srcset="/img/loading.gif" lazyload alt="bp修改地址信息post请求" idth="700"/></li>
 </ol>
 <h3 id="CSRF-Token-防护机制"><a href="#CSRF-Token-防护机制" class="headerlink" title="CSRF Token 防护机制"></a>CSRF Token 防护机制</h3><ol>
 <li>页面表单每次渲染生成随机、不可预测的<code>csrf_token</code>，随表单一起提交。</li>
@@ -447,10 +447,10 @@
 <p>pikachu 靶场带 token 的关卡：直接复制上面 POST 恶意表单，<strong>缺少合法 token，请求会被后端拒绝，攻击失效</strong>。</p>
 <h3 id="CSRF-绕过思路（靶场练习）"><a href="#CSRF-绕过思路（靶场练习）" class="headerlink" title="CSRF 绕过思路（靶场练习）"></a>CSRF 绕过思路（靶场练习）</h3><ol>
 <li><p>还是登录lucy这个账号，修改数据（本次修改住址为：wuhan）然后到bp里面找到抓的包，将本次请求复制下来。发现这次多了一个token值。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/58.png" srcset="/img/loading.gif" lazyload alt="绕过获取抓包" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/61.png" srcset="/img/loading.gif" lazyload alt="绕过获取抓包" idth="700"/>
 </li>
 <li><p>打开页面，进行检查，刷新发现每次进入页面都会访问token_get_edit.php文件，并且可以检查中看到对应的值。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/59.png" srcset="/img/loading.gif" lazyload alt="绕过token获取" idth="700"/></li>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/62.png" srcset="/img/loading.gif" lazyload alt="绕过token获取" idth="700"/></li>
 </ol>
 <h2 id="CSRF-防御方案"><a href="#CSRF-防御方案" class="headerlink" title="CSRF 防御方案"></a>CSRF 防御方案</h2><ol>
 <li><strong>核心方案：使用 CSRF‑Token</strong><br>关键操作表单每次生成随机 token，存入 session，提交请求校验 token 一致性。</li>

