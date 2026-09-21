@@ -19,19 +19,19 @@
   <meta name="author" content="llppff573">
   <meta name="keywords" content="博客,笔记">
   
-    <meta name="description" content="目录遍历&amp;敏感信息泄露漏洞原理目录遍历（路径穿越）也叫路径穿越漏洞。程序将用户可控参数直接拼接为文件路径，没有对输入做过滤，攻击者使用..&#x2F;向上跳转目录，脱离网站根目录，读取服务器上任意位置文件。核心一句话：可控文件路径 + 未过滤..&#x2F;，跳出web目录读取其他文件 敏感信息泄露网站、服务器因配置不当，直接对外暴露敏感资源，不需要目录遍历也能直接访问，泄露源码、备份文件、配置、日">
+    <meta name="description" content="目录遍历&amp;敏感信息泄露漏洞原理目录遍历（路径穿越）也叫路径穿越漏洞。程序将用户可控参数直接拼接为文件路径，没有对输入做过滤，攻击者使用..&#x2F;向上跳转目录，脱离网站根目录，读取服务器上任意位置文件。核心一句话：可控文件路径 + 未过滤..&#x2F;，跳出web目录读取其他文件  ⚠️安全提醒：仅允许在自己授权的靶场环境练习，禁止对非授权网站做任何测试。  敏感信息泄露网站、服务器因配置不当">
 <meta property="og:type" content="article">
 <meta property="og:title" content="目录遍历 敏感信息泄露漏洞学习笔记">
 <meta property="og:url" content="https://llppff573.github.io/2026/09/21/%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86-%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="llppff573">
-<meta property="og:description" content="目录遍历&amp;敏感信息泄露漏洞原理目录遍历（路径穿越）也叫路径穿越漏洞。程序将用户可控参数直接拼接为文件路径，没有对输入做过滤，攻击者使用..&#x2F;向上跳转目录，脱离网站根目录，读取服务器上任意位置文件。核心一句话：可控文件路径 + 未过滤..&#x2F;，跳出web目录读取其他文件 敏感信息泄露网站、服务器因配置不当，直接对外暴露敏感资源，不需要目录遍历也能直接访问，泄露源码、备份文件、配置、日">
+<meta property="og:description" content="目录遍历&amp;敏感信息泄露漏洞原理目录遍历（路径穿越）也叫路径穿越漏洞。程序将用户可控参数直接拼接为文件路径，没有对输入做过滤，攻击者使用..&#x2F;向上跳转目录，脱离网站根目录，读取服务器上任意位置文件。核心一句话：可控文件路径 + 未过滤..&#x2F;，跳出web目录读取其他文件  ⚠️安全提醒：仅允许在自己授权的靶场环境练习，禁止对非授权网站做任何测试。  敏感信息泄露网站、服务器因配置不当">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/138.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/139.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/140.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/141.png">
 <meta property="article:published_time" content="2026-09-21T08:44:28.000Z">
-<meta property="article:modified_time" content="2026-09-21T09:51:52.189Z">
+<meta property="article:modified_time" content="2026-09-21T10:42:46.012Z">
 <meta property="article:author" content="llppff573">
 <meta property="article:tag" content="博客,笔记">
 <meta name="twitter:card" content="summary_large_image">
@@ -387,6 +387,9 @@
               <div class="markdown-body">
                 
                 <h1 id="目录遍历-敏感信息泄露"><a href="#目录遍历-敏感信息泄露" class="headerlink" title="目录遍历&amp;敏感信息泄露"></a>目录遍历&amp;敏感信息泄露</h1><h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><h3 id="目录遍历（路径穿越）"><a href="#目录遍历（路径穿越）" class="headerlink" title="目录遍历（路径穿越）"></a>目录遍历（路径穿越）</h3><p>也叫路径穿越漏洞。程序将用户可控参数直接拼接为文件路径，没有对输入做过滤，攻击者使用<code>../</code>向上跳转目录，脱离网站根目录，读取服务器上任意位置文件。<br>核心一句话：<strong>可控文件路径 + 未过滤..&#x2F;，跳出web目录读取其他文件</strong></p>
+<blockquote>
+<p>⚠️安全提醒：仅允许在自己授权的靶场环境练习，禁止对非授权网站做任何测试。</p>
+</blockquote>
 <h3 id="敏感信息泄露"><a href="#敏感信息泄露" class="headerlink" title="敏感信息泄露"></a>敏感信息泄露</h3><p>网站、服务器因配置不当，直接对外暴露敏感资源，不需要目录遍历也能直接访问，泄露源码、备份文件、配置、日志等信息。<br>核心一句话：<strong>服务器配置失误，敏感文件&#x2F;目录可被外部直接访问下载</strong></p>
 <blockquote>
 <p>两者经常关联：目录遍历用来读取任意敏感文件；敏感信息泄露是直接暴露文件。</p>

@@ -19,18 +19,18 @@
   <meta name="author" content="llppff573">
   <meta name="keywords" content="博客,笔记">
   
-    <meta name="description" content="RCE 远程代码执行漏洞一、漏洞原理RCE（Remote Command &#x2F; Code Execution）远程代码&#x2F;命令执行漏洞。Web应用接收用户可控输入，直接把输入内容丢进系统命令或者代码执行函数，没有过滤、转义、白名单校验。攻击者可以构造特殊字符拼接系统指令，在服务器上执行任意系统命令，获取服务器信息、读写文件、拿下服务器权限。  区分两个概念（笔记重点）  命令执行：">
+    <meta name="description" content="RCE 远程代码执行漏洞一、漏洞原理RCE（Remote Command &#x2F; Code Execution）远程代码&#x2F;命令执行漏洞。Web应用接收用户可控输入，直接把输入内容丢进系统命令或者代码执行函数，没有过滤、转义、白名单校验。攻击者可以构造特殊字符拼接系统指令，在服务器上执行任意系统命令，获取服务器信息、读写文件、拿下服务器权限。  ⚠️安全提醒：仅允许在自己授权的靶场环">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RCE学习笔记">
 <meta property="og:url" content="https://llppff573.github.io/2026/09/18/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="llppff573">
-<meta property="og:description" content="RCE 远程代码执行漏洞一、漏洞原理RCE（Remote Command &#x2F; Code Execution）远程代码&#x2F;命令执行漏洞。Web应用接收用户可控输入，直接把输入内容丢进系统命令或者代码执行函数，没有过滤、转义、白名单校验。攻击者可以构造特殊字符拼接系统指令，在服务器上执行任意系统命令，获取服务器信息、读写文件、拿下服务器权限。  区分两个概念（笔记重点）  命令执行：">
+<meta property="og:description" content="RCE 远程代码执行漏洞一、漏洞原理RCE（Remote Command &#x2F; Code Execution）远程代码&#x2F;命令执行漏洞。Web应用接收用户可控输入，直接把输入内容丢进系统命令或者代码执行函数，没有过滤、转义、白名单校验。攻击者可以构造特殊字符拼接系统指令，在服务器上执行任意系统命令，获取服务器信息、读写文件、拿下服务器权限。  ⚠️安全提醒：仅允许在自己授权的靶场环">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/106.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/107.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/108.png">
 <meta property="article:published_time" content="2026-09-18T12:13:54.000Z">
-<meta property="article:modified_time" content="2026-09-18T12:33:50.946Z">
+<meta property="article:modified_time" content="2026-09-21T10:42:52.878Z">
 <meta property="article:author" content="llppff573">
 <meta property="article:tag" content="博客,笔记">
 <meta name="twitter:card" content="summary_large_image">
@@ -330,7 +330,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          1.6k 字
         
       </span>
     
@@ -341,7 +341,7 @@
         
         
         
-          13 分钟
+          14 分钟
         
       </span>
     
@@ -387,7 +387,7 @@
                 
                 <h1 id="RCE-远程代码执行漏洞"><a href="#RCE-远程代码执行漏洞" class="headerlink" title="RCE 远程代码执行漏洞"></a>RCE 远程代码执行漏洞</h1><h2 id="一、漏洞原理"><a href="#一、漏洞原理" class="headerlink" title="一、漏洞原理"></a>一、漏洞原理</h2><p>RCE（Remote Command &#x2F; Code Execution）远程代码&#x2F;命令执行漏洞。<br>Web应用接收用户可控输入，直接把输入内容丢进系统命令或者代码执行函数，没有过滤、转义、白名单校验。<br>攻击者可以构造特殊字符拼接系统指令，<strong>在服务器上执行任意系统命令</strong>，获取服务器信息、读写文件、拿下服务器权限。</p>
 <blockquote>
-<p>区分两个概念（笔记重点）</p>
+<p>⚠️安全提醒：仅允许在自己授权的靶场环境练习，禁止对非授权网站做任何测试。<br>区分两个概念（笔记重点）</p>
 <ol>
 <li>命令执行：调用操作系统命令（<code>system()</code>、<code>exec()</code>、<code>shell_exec()</code>等PHP函数），执行cmd&#x2F;linux shell指令</li>
 <li>代码执行：直接把输入当做编程语言代码解析运行（<code>eval()</code>、<code>assert()</code>、<code>preg_replace /e</code>）</li>

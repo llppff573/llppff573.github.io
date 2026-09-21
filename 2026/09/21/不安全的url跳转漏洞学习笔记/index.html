@@ -19,15 +19,15 @@
   <meta name="author" content="llppff573">
   <meta name="keywords" content="博客,笔记">
   
-    <meta name="description" content="不安全的URL跳转漏洞漏洞原理不安全 URL 跳转（Open Redirect），也叫任意跳转漏洞。业务页面接收用户可控的 URL 参数，后端直接跳转到该地址，没有做白名单校验、域名过滤。攻击者可以构造恶意跳转链接，诱导用户跳转到钓鱼网站、恶意页面。 核心一句话：可控跳转地址 + 无域名校验 &#x3D; 钓鱼、伪装权威链接 漏洞成因 网页登录、退出、跳转功能需要传入 url&#x2F;redirect&#x2F;b">
+    <meta name="description" content="不安全的URL跳转漏洞漏洞原理不安全 URL 跳转（Open Redirect），也叫任意跳转漏洞。业务页面接收用户可控的 URL 参数，后端直接跳转到该地址，没有做白名单校验、域名过滤。攻击者可以构造恶意跳转链接，诱导用户跳转到钓鱼网站、恶意页面。 核心一句话：可控跳转地址 + 无域名校验 &#x3D; 钓鱼、伪装权威链接  ⚠️安全提醒：仅允许在自己授权的靶场环境练习，禁止对非授权网站做任何测">
 <meta property="og:type" content="article">
 <meta property="og:title" content="不安全的url跳转漏洞学习笔记">
 <meta property="og:url" content="https://llppff573.github.io/2026/09/21/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84url%E8%B7%B3%E8%BD%AC%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="llppff573">
-<meta property="og:description" content="不安全的URL跳转漏洞漏洞原理不安全 URL 跳转（Open Redirect），也叫任意跳转漏洞。业务页面接收用户可控的 URL 参数，后端直接跳转到该地址，没有做白名单校验、域名过滤。攻击者可以构造恶意跳转链接，诱导用户跳转到钓鱼网站、恶意页面。 核心一句话：可控跳转地址 + 无域名校验 &#x3D; 钓鱼、伪装权威链接 漏洞成因 网页登录、退出、跳转功能需要传入 url&#x2F;redirect&#x2F;b">
+<meta property="og:description" content="不安全的URL跳转漏洞漏洞原理不安全 URL 跳转（Open Redirect），也叫任意跳转漏洞。业务页面接收用户可控的 URL 参数，后端直接跳转到该地址，没有做白名单校验、域名过滤。攻击者可以构造恶意跳转链接，诱导用户跳转到钓鱼网站、恶意页面。 核心一句话：可控跳转地址 + 无域名校验 &#x3D; 钓鱼、伪装权威链接  ⚠️安全提醒：仅允许在自己授权的靶场环境练习，禁止对非授权网站做任何测">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-09-21T09:53:04.000Z">
-<meta property="article:modified_time" content="2026-09-21T10:06:20.184Z">
+<meta property="article:modified_time" content="2026-09-21T10:42:47.826Z">
 <meta property="article:author" content="llppff573">
 <meta property="article:tag" content="博客,笔记">
 <meta name="twitter:card" content="summary_large_image">
@@ -383,6 +383,9 @@
                 
                 <h1 id="不安全的URL跳转漏洞"><a href="#不安全的URL跳转漏洞" class="headerlink" title="不安全的URL跳转漏洞"></a>不安全的URL跳转漏洞</h1><h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>不安全 URL 跳转（Open Redirect），也叫<strong>任意跳转漏洞</strong>。<br>业务页面接收用户可控的 URL 参数，后端直接跳转到该地址，<strong>没有做白名单校验、域名过滤</strong>。攻击者可以构造恶意跳转链接，诱导用户跳转到钓鱼网站、恶意页面。</p>
 <p>核心一句话：<strong>可控跳转地址 + 无域名校验 &#x3D; 钓鱼、伪装权威链接</strong></p>
+<blockquote>
+<p>⚠️安全提醒：仅允许在自己授权的靶场环境练习，禁止对非授权网站做任何测试。</p>
+</blockquote>
 <h2 id="漏洞成因"><a href="#漏洞成因" class="headerlink" title="漏洞成因"></a>漏洞成因</h2><ol>
 <li>网页登录、退出、跳转功能需要传入 <code>url/redirect/back</code> 跳转参数</li>
 <li>跳转目标地址完全由用户可控</li>
