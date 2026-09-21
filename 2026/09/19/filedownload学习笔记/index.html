@@ -19,26 +19,35 @@
   <meta name="author" content="llppff573">
   <meta name="keywords" content="博客,笔记">
   
-    <meta name="description" content="RCE 远程代码执行漏洞一、漏洞原理RCE（Remote Command &#x2F; Code Execution）远程代码&#x2F;命令执行漏洞。Web应用接收用户可控输入，直接把输入内容丢进系统命令或者代码执行函数，没有过滤、转义、白名单校验。攻击者可以构造特殊字符拼接系统指令，在服务器上执行任意系统命令，获取服务器信息、读写文件、拿下服务器权限。  区分两个概念（笔记重点）  命令执行：">
+    <meta name="description" content="unsafe file Download and Upload学习笔记一、漏洞综述不安全文件操作漏洞分为 Unsafe File Download（不安全文件下载） 与 Unsafe File Upload（不安全文件上传），属于Web高频高危漏洞。成因是对用户可控文件参数、文件内容、后缀校验不严，攻击者可读取服务器敏感文件或上传恶意脚本，造成信息泄露、服务器被控制。 两者简单区分：文件下载是读文">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RCE学习笔记">
-<meta property="og:url" content="https://llppff573.github.io/2026/09/18/RCE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:title" content="unsafe file Download and Upload学习笔记">
+<meta property="og:url" content="https://llppff573.github.io/2026/09/19/filedownload%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="llppff573">
-<meta property="og:description" content="RCE 远程代码执行漏洞一、漏洞原理RCE（Remote Command &#x2F; Code Execution）远程代码&#x2F;命令执行漏洞。Web应用接收用户可控输入，直接把输入内容丢进系统命令或者代码执行函数，没有过滤、转义、白名单校验。攻击者可以构造特殊字符拼接系统指令，在服务器上执行任意系统命令，获取服务器信息、读写文件、拿下服务器权限。  区分两个概念（笔记重点）  命令执行：">
+<meta property="og:description" content="unsafe file Download and Upload学习笔记一、漏洞综述不安全文件操作漏洞分为 Unsafe File Download（不安全文件下载） 与 Unsafe File Upload（不安全文件上传），属于Web高频高危漏洞。成因是对用户可控文件参数、文件内容、后缀校验不严，攻击者可读取服务器敏感文件或上传恶意脚本，造成信息泄露、服务器被控制。 两者简单区分：文件下载是读文">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/106.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/107.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/108.png">
-<meta property="article:published_time" content="2026-09-18T12:13:54.000Z">
-<meta property="article:modified_time" content="2026-09-18T12:33:50.946Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/113.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/114.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/115.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/116.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/117.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/118.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/119.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/120.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/121.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/122.png">
+<meta property="article:published_time" content="2026-09-19T04:34:42.000Z">
+<meta property="article:modified_time" content="2026-09-21T03:21:14.761Z">
 <meta property="article:author" content="llppff573">
-<meta property="article:tag" content="博客,笔记">
+<meta property="article:tag" content="Web安全">
+<meta property="article:tag" content="文件下载">
+<meta property="article:tag" content="文件上传">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/106.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/113.png">
   
   
   
-  <title>RCE学习笔记 - llppff573</title>
+  <title>unsafe file Download and Upload学习笔记 - llppff573</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -307,7 +316,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="RCE学习笔记"></span>
+            <span id="subtitle" data-typed-text="unsafe file Download and Upload学习笔记"></span>
           
         </div>
 
@@ -318,8 +327,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-09-18 20:13" pubdate>
-          2026年9月18日 晚上
+        <time datetime="2026-09-19 12:34" pubdate>
+          2026年9月19日 下午
         </time>
       </span>
     
@@ -330,7 +339,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          2.3k 字
         
       </span>
     
@@ -341,7 +350,7 @@
         
         
         
-          13 分钟
+          19 分钟
         
       </span>
     
@@ -380,98 +389,115 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">RCE学习笔记</h1>
+            <h1 id="seo-header">unsafe file Download and Upload学习笔记</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="RCE-远程代码执行漏洞"><a href="#RCE-远程代码执行漏洞" class="headerlink" title="RCE 远程代码执行漏洞"></a>RCE 远程代码执行漏洞</h1><h2 id="一、漏洞原理"><a href="#一、漏洞原理" class="headerlink" title="一、漏洞原理"></a>一、漏洞原理</h2><p>RCE（Remote Command &#x2F; Code Execution）远程代码&#x2F;命令执行漏洞。<br>Web应用接收用户可控输入，直接把输入内容丢进系统命令或者代码执行函数，没有过滤、转义、白名单校验。<br>攻击者可以构造特殊字符拼接系统指令，<strong>在服务器上执行任意系统命令</strong>，获取服务器信息、读写文件、拿下服务器权限。</p>
+                <h1 id="unsafe-file-Download-and-Upload学习笔记"><a href="#unsafe-file-Download-and-Upload学习笔记" class="headerlink" title="unsafe file Download and Upload学习笔记"></a>unsafe file Download and Upload学习笔记</h1><h2 id="一、漏洞综述"><a href="#一、漏洞综述" class="headerlink" title="一、漏洞综述"></a>一、漏洞综述</h2><p>不安全文件操作漏洞分为 <strong>Unsafe File Download（不安全文件下载）</strong> 与 <strong>Unsafe File Upload（不安全文件上传）</strong>，属于Web高频高危漏洞。成因是对用户可控文件参数、文件内容、后缀校验不严，攻击者可读取服务器敏感文件或上传恶意脚本，造成信息泄露、服务器被控制。</p>
+<p>两者简单区分：文件下载是<strong>读文件</strong>；文件上传是<strong>写文件</strong>，实战中经常组合利用。</p>
+<h2 id="Unsafe-File-Download-不安全文件下载"><a href="#Unsafe-File-Download-不安全文件下载" class="headerlink" title="Unsafe File Download 不安全文件下载"></a>Unsafe File Download 不安全文件下载</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理:"></a>原理:</h3><p>后端直接接收前端<code>filename</code>&#x2F;<code>file</code>&#x2F;<code>path</code>参数，拼接路径读取文件，无目录限制与白名单，攻击者利用<strong>目录遍历（路径穿越）</strong>跳出业务目录，读取服务器任意本地文件。</p>
+<h3 id="实验内容："><a href="#实验内容：" class="headerlink" title="实验内容："></a>实验内容：</h3><ol>
+<li><p>打开对应界面，随便点击一个图片进行下载，观察其url，实际是把文件名传给后端并进行下载：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">http://localhost:84/vul/unsafedownload/execdownload.php?filename=ai.png<br></code></pre></td></tr></table></figure></li>
+<li><p>利用以上特性，再次构造以下payload去获取文件信息，</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">http://localhost:84/vul/unsafedownload/execdownload.php?filename=../../../../../../../../../../../Windows/System32/drivers/etc/hosts<br></code></pre></td></tr></table></figure>
+<p>访问该url后可以看到这个文件会被下载，效果如下：</p>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/113.png" srcset="/img/loading.gif" lazyload alt="文件下载效果" idth="700"/>
+利用该特性也可以下载其他路径的文件，原理都一样。
+</li>
+<li><p>常见绕过</p>
+</li>
+</ol>
+<ul>
+<li>URL编码：<code>..%2F</code>，双重编码<code>..%252F</code></li>
+<li>斜杠替换：<code>..\..\</code></li>
+<li>过滤替换绕过：<code>....//</code></li>
+<li>00截断：<code>../../etc/passwd%00.jpg</code>（仅PHP5.3及以下有效）</li>
+</ul>
+<ol start="4">
+<li>修复方案</li>
+<li>使用文件ID映射，前端只传ID，隐藏真实文件路径</li>
+<li>固定基础目录，校验真实路径不能跳出指定目录</li>
+<li>文件名白名单，只放行允许下载的文件</li>
+<li>用户输入不能直接传入<code>readfile</code>、<code>file_get_contents</code>等读取函数</li>
+</ol>
+<h2 id="Unsafe-File-Upload-不安全文件上传"><a href="#Unsafe-File-Upload-不安全文件上传" class="headerlink" title="Unsafe File Upload 不安全文件上传"></a>Unsafe File Upload 不安全文件上传</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>上传功能未校验文件后缀、MIME、文件内容，攻击者上传php&#x2F;jsp&#x2F;asp等WebShell，访问文件即可执行恶意代码，获取服务器权限。</p>
 <blockquote>
-<p>区分两个概念（笔记重点）</p>
-<ol>
-<li>命令执行：调用操作系统命令（<code>system()</code>、<code>exec()</code>、<code>shell_exec()</code>等PHP函数），执行cmd&#x2F;linux shell指令</li>
-<li>代码执行：直接把输入当做编程语言代码解析运行（<code>eval()</code>、<code>assert()</code>、<code>preg_replace /e</code>）</li>
-</ol>
+<p>利用条件：上传恶意文件 + 文件可被解析执行</p>
 </blockquote>
-<p>核心一句话：<strong>用户输入被当成系统命令&#x2F;后端代码执行，不是单纯字符串处理</strong>。</p>
-<h2 id="二、漏洞产生核心原因"><a href="#二、漏洞产生核心原因" class="headerlink" title="二、漏洞产生核心原因"></a>二、漏洞产生核心原因</h2><ol>
-<li>业务需求需要调用系统命令，开发直接拼接用户参数</li>
-<li>未对特殊符号过滤：<code>| &amp; ; $ </code> <code>`</code> <code>()</code></li>
-<li>使用高危函数：<code>system</code>、<code>shell_exec</code>、<code>passthru</code>、<code>eval</code>、<code>assert</code></li>
-<li>黑名单过滤容易被绕过，仅黑名单防护不可靠</li>
+<p>危险示例PHP代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">move_uploaded_file</span>(<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;file&#x27;</span>][<span class="hljs-string">&#x27;tmp_name&#x27;</span>],<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;file&#x27;</span>][<span class="hljs-string">&#x27;name&#x27;</span>]);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h3><h4 id="客户端check"><a href="#客户端check" class="headerlink" title="客户端check"></a>客户端check</h4><ol>
+<li>进入对应界面，选择非png图片类型的文件进行上传，发现前端会进行弹窗提示，效果如下：<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/114.png" srcset="/img/loading.gif" lazyload alt="文件上传提示弹窗" idth="700"/></li>
 </ol>
-<h3 id="常用命令拼接符号（Windows-Linux）"><a href="#常用命令拼接符号（Windows-Linux）" class="headerlink" title="常用命令拼接符号（Windows &amp; Linux）"></a>常用命令拼接符号（Windows &amp; Linux）</h3><table>
+<p>检查页面前端上传文件对应的代码，是在前端对上传的文件进行限制，后端并不参与文件的上传，如果是图片文件就不会弹窗，不是图片文件才会弹窗。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/115.png" srcset="/img/loading.gif" lazyload alt="文件上传框检查" idth="700"/><br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/116.png" srcset="/img/loading.gif" lazyload alt="文件上传前端代码" idth="700"/></p>
+<p>将上图中的检查出的代码中的</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">onchange=&quot;checkFileExt(this.value)&quot;<br></code></pre></td></tr></table></figure>
+<p>改为：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">onchange=&quot;&quot;<br></code></pre></td></tr></table></figure>
+<p>再次尝试文件上传，发现可以正常上传并保存在本地。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/117.png" srcset="/img/loading.gif" lazyload alt="文件上传成功" idth="700"/><br>我们修改url，利用刚才获取的路径，访问这个文件，并获取ipconfig信息。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">http://localhost:84/vul/unsafeupload/uploads/yijuhua.php?x=ipconfig<br></code></pre></td></tr></table></figure>
+<p>效果如下,乱码的原因是输出的内容与浏览器编码不一致。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/118.png" srcset="/img/loading.gif" lazyload alt="读取结果" idth="700"/></p>
+<h4 id="服务端check"><a href="#服务端check" class="headerlink" title="服务端check"></a>服务端check</h4><ol>
+<li><p>服务端与客户端最直接可见的区别就是，客户端在提交的时候就进行判断文件类型，二服务端在上传的时候进行文件类型判断。所以在上传时如果文件类型不符就会上传失败。</p>
+</li>
+<li><p>上传一个不可直接上传的文件，然后到bp找到这个抓包，并将错误的抓包发送到Repeater，将其中关于类型的部分修改为：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">image/png<br></code></pre></td></tr></table></figure>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/119.png" srcset="/img/loading.gif" lazyload alt="修改文件类型" idth="700"/>
+发送后再相应界面可以看到成功上传，效果如下：
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/120.png" srcset="/img/loading.gif" lazyload alt="修改文件类型上传成功" idth="700"/></li>
+</ol>
+<h4 id="getimagesize"><a href="#getimagesize" class="headerlink" title="getimagesize()"></a>getimagesize()</h4><ol>
+<li><p>打开对应页面，利用cmd，构造恶意木马图片，以下述代码为例：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">copy /b tset.jpg + yijuhua.php cccc.png<br></code></pre></td></tr></table></figure>
+<p>会在指定的对应文件夹下面生成一个cccc.png，效果如下：</p>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/121.png" srcset="/img/loading.gif" lazyload alt="木马图片制作" idth="700"/>
+</li>
+<li><p>将刚才制作的恶意木马图片上传到靶场，可以正常上传此文件。效果如下：</p>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/122.png" srcset="/img/loading.gif" lazyload alt="木马图片上传" idth="700"/>
+</li>
+<li><p>直接访问这个文件，恶意代码是不会执行的，只能看到对应的图片内容。我们可以利用文件包含漏洞来访问这个文件，使恶意代码被执行。</p>
+</li>
+</ol>
+<h3 id="3-2-常见绕过"><a href="#3-2-常见绕过" class="headerlink" title="3.2 常见绕过"></a>3.2 常见绕过</h3><ul>
+<li>黑名单绕过：<code>php3、php5、phtml、jspx</code>等后缀</li>
+<li>大小写绕过：<code>Shell.Php</code></li>
+<li>00截断上传：<code>shell.php%00.jpg</code>（低版本PHP）</li>
+<li>图片马：<code>copy 1.jpg+shell.php 2.jpg</code>，配合文件包含执行</li>
+<li>MIME绕过：抓包修改<code>Content-Type</code>为<code>image/jpeg</code></li>
+</ul>
+<h3 id="3-4-修复方案"><a href="#3-4-修复方案" class="headerlink" title="3.4 修复方案"></a>3.4 修复方案</h3><ol>
+<li><strong>白名单校验</strong>，仅允许jpg&#x2F;png&#x2F;gip&#x2F;zip等合法后缀</li>
+<li>多重校验：后缀 + MIME + 文件头</li>
+<li>文件上传后重命名，随机文件名+固定后缀</li>
+<li>上传目录关闭脚本执行权限</li>
+<li>文件存储到非web可访问目录</li>
+</ol>
+<h2 id="四、漏洞对比-联动利用"><a href="#四、漏洞对比-联动利用" class="headerlink" title="四、漏洞对比&amp;联动利用"></a>四、漏洞对比&amp;联动利用</h2><table>
 <thead>
 <tr>
-<th>符号</th>
-<th>作用</th>
+<th>漏洞类型</th>
+<th>行为</th>
+<th>危害</th>
+<th>核心条件</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>;</code></td>
-<td>Linux：前面命令执行完，继续执行后面命令</td>
+<td>不安全文件下载</td>
+<td>读取文件</td>
+<td>源码&#x2F;配置泄露</td>
+<td>可控路径，无目录限制</td>
 </tr>
 <tr>
-<td>&#96;</td>
-<td>&#96;</td>
-</tr>
-<tr>
-<td>&#96;</td>
-<td></td>
-</tr>
-<tr>
-<td><code>&amp;</code></td>
-<td>Windows&#x2F;Linux，前后命令都执行</td>
-</tr>
-<tr>
-<td><code>&amp;&amp;</code></td>
-<td>前面命令执行成功，才执行后面</td>
+<td>不安全文件上传</td>
+<td>写入文件</td>
+<td>上传木马、代码执行</td>
+<td>校验缺失，文件可解析</td>
 </tr>
 </tbody></table>
-<h2 id="三、Pikachu靶场实操：Remote-Command-Execute（命令执行）"><a href="#三、Pikachu靶场实操：Remote-Command-Execute（命令执行）" class="headerlink" title="三、Pikachu靶场实操：Remote Command Execute（命令执行）"></a>三、Pikachu靶场实操：Remote Command Execute（命令执行）</h2><h3 id="远程ping测试功能"><a href="#远程ping测试功能" class="headerlink" title="远程ping测试功能"></a>远程ping测试功能</h3><ol>
-<li><p>打开对应页面，在输入框中输入127.0.0.1，这是本地地址是一定可以ping通的，内容如下：</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/106.png" srcset="/img/loading.gif" lazyload alt="ping127.0.0.1结果" idth="700"/>
-</li>
-<li><p>我们可以构造以下闭合，payload如下：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">127.0.0.1 &amp; ipconfig<br></code></pre></td></tr></table></figure>
-<p>点击提交，可以看到ipconfig所获得的内容。效果如下：</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/107.png" srcset="/img/loading.gif" lazyload alt="ipconfig结果" idth="700"/></li>
-</ol>
-<p>可见是直接拼接所输入的内容，所以可以使用例如ipconfig等命令获取信息。</p>
-<h3 id="ESCI"><a href="#ESCI" class="headerlink" title="ESCI"></a>ESCI</h3><ol>
-<li>输入以下payload：<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">phpinfo();<br></code></pre></td></tr></table></figure>
-点击提交可以获得php信息，内容如下：<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/108.png" srcset="/img/loading.gif" lazyload alt="phpinfo结果" idth="700"/></li>
-</ol>
-<p>从代码界面分析，从前段获取的信息，会用eval进行提交，只要不报错就不会有其他影响。</p>
-<h2 id="常见过滤绕过（靶场常用）"><a href="#常见过滤绕过（靶场常用）" class="headerlink" title="常见过滤绕过（靶场常用）"></a>常见过滤绕过（靶场常用）</h2><ol>
-<li>空格过滤：<code>%09</code>（tab）、<code>$&#123;IFS&#125;</code>(linux)<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs accesslog"><span class="hljs-number">127.0.0.1</span>|cat$&#123;IFS&#125;/etc/passwd<br></code></pre></td></tr></table></figure></li>
-<li>关键字黑名单过滤 whoami<br>利用字符串拼接绕过：<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lisp">w&#x27;h&#x27;o&#x27;am&#x27;i<br></code></pre></td></tr></table></figure></li>
-<li>反斜杠、变量绕过</li>
-</ol>
-<h2 id="六、漏洞危害"><a href="#六、漏洞危害" class="headerlink" title="六、漏洞危害"></a>六、漏洞危害</h2><ol>
-<li>读取服务器任意文件：配置文件、数据库账号密码</li>
-<li>写入文件，上传一句话木马，获取webshell</li>
-<li>执行系统命令，接管服务器</li>
-<li>横向移动，内网探测</li>
-</ol>
-<h2 id="七、防御方案"><a href="#七、防御方案" class="headerlink" title="七、防御方案"></a>七、防御方案</h2><ol>
-<li><strong>优先使用白名单</strong>：只允许指定内容输入（ping场景只允许ip格式）</li>
-<li>禁用高危函数：php.ini 禁用 system、eval、shell_exec 等</li>
-<li>输入过滤：对<code>| &amp; ; $ </code> <code>`</code> <code>()</code>等特殊符号转义&#x2F;拦截</li>
-<li>使用安全API，不要拼接字符串调用系统命令，使用函数参数传参</li>
-<li>最小权限运行web服务账号，即使被拿下，限制权限范围</li>
-</ol>
-<h2 id="八、实验踩坑记录"><a href="#八、实验踩坑记录" class="headerlink" title="八、实验踩坑记录"></a>八、实验踩坑记录</h2><ol>
-<li>Windows环境下<code>ls</code>不能用，要换成<code>dir</code>，容易报错无结果</li>
-<li>管道符编码：GET提交时特殊字符浏览器会自动编码；Burp手动发包注意编码问题</li>
-<li>eval代码执行，payload末尾必须带分号，否则PHP语法报错不执行</li>
-<li>phpstudy PHP版本过高，部分危险函数默认被禁用，会导致payload无返回</li>
-</ol>
-<h2 id="九、对比总结（方便笔记复习）"><a href="#九、对比总结（方便笔记复习）" class="headerlink" title="九、对比总结（方便笔记复习）"></a>九、对比总结（方便笔记复习）</h2><ul>
-<li>CSRF：<strong>借用用户身份</strong>发起请求，不能执行命令</li>
-<li>SQL注入：<strong>操纵数据库语句</strong>，只和数据库交互</li>
-<li>RCE：<strong>服务器执行系统&#x2F;编程语言代码</strong>，权限最高，危害最大</li>
-</ul>
+<p>联动：上传图片马，借助文件下载&#x2F;文件包含漏洞执行木马，拿到权限。</p>
 
                 
               </div>
@@ -481,6 +507,17 @@
               <div class="post-metas my-3">
   
   
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Web%E5%AE%89%E5%85%A8/" class="print-no-link">#Web安全</a>
+      
+        <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/" class="print-no-link">#文件下载</a>
+      
+        <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" class="print-no-link">#文件上传</a>
+      
+    </div>
+  
 </div>
 
 
@@ -489,8 +526,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>RCE学习笔记</div>
-      <div>https://llppff573.github.io/2026/09/18/RCE学习笔记/</div>
+      <div>unsafe file Download and Upload学习笔记</div>
+      <div>https://llppff573.github.io/2026/09/19/filedownload学习笔记/</div>
     </div>
     <div class="license-meta">
       
@@ -502,7 +539,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年9月18日</div>
+          <div>2026年9月19日</div>
         </div>
       
       
@@ -534,18 +571,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/09/18/file%20Inclusion%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="file Inclusion学习笔记">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">file Inclusion学习笔记</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/09/17/SQL-Inject-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="SQL‑Inject SQL注入学习笔记">
-                        <span class="hidden-mobile">SQL‑Inject SQL注入学习笔记</span>
+                      <a href="/2026/09/18/file%20Inclusion%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="file Inclusion学习笔记">
+                        <span class="hidden-mobile">file Inclusion学习笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
