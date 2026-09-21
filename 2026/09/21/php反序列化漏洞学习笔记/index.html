@@ -19,35 +19,27 @@
   <meta name="author" content="llppff573">
   <meta name="keywords" content="博客,笔记">
   
-    <meta name="description" content="unsafe file Download and Upload学习笔记一、漏洞综述不安全文件操作漏洞分为 Unsafe File Download（不安全文件下载） 与 Unsafe File Upload（不安全文件上传），属于Web高频高危漏洞。成因是对用户可控文件参数、文件内容、后缀校验不严，攻击者可读取服务器敏感文件或上传恶意脚本，造成信息泄露、服务器被控制。 两者简单区分：文件下载是读文">
+    <meta name="description" content="PHP反序列化漏洞学习笔记（Pikachu靶场版）漏洞原理PHP中serialize()序列化：把对象转换成可存储传输的字符串；unserialize()反序列化：将字符串还原成对象。漏洞核心：用户可控的输入直接传入unserialize()函数，攻击者可以构造恶意序列化字符串，控制对象属性，触发类中的魔术方法，执行任意代码、读取文件等恶意行为。  一句话总结：unserialize在解析恶意序列">
 <meta property="og:type" content="article">
-<meta property="og:title" content="unsafe file Download and Upload学习笔记">
-<meta property="og:url" content="https://llppff573.github.io/2026/09/19/filedownload%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:title" content="php反序列化漏洞学习笔记">
+<meta property="og:url" content="https://llppff573.github.io/2026/09/21/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="llppff573">
-<meta property="og:description" content="unsafe file Download and Upload学习笔记一、漏洞综述不安全文件操作漏洞分为 Unsafe File Download（不安全文件下载） 与 Unsafe File Upload（不安全文件上传），属于Web高频高危漏洞。成因是对用户可控文件参数、文件内容、后缀校验不严，攻击者可读取服务器敏感文件或上传恶意脚本，造成信息泄露、服务器被控制。 两者简单区分：文件下载是读文">
+<meta property="og:description" content="PHP反序列化漏洞学习笔记（Pikachu靶场版）漏洞原理PHP中serialize()序列化：把对象转换成可存储传输的字符串；unserialize()反序列化：将字符串还原成对象。漏洞核心：用户可控的输入直接传入unserialize()函数，攻击者可以构造恶意序列化字符串，控制对象属性，触发类中的魔术方法，执行任意代码、读取文件等恶意行为。  一句话总结：unserialize在解析恶意序列">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/113.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/114.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/115.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/116.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/117.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/118.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/119.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/120.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/121.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/122.png">
-<meta property="article:published_time" content="2026-09-19T04:34:42.000Z">
-<meta property="article:modified_time" content="2026-09-21T03:21:14.761Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/129.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/130.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/131.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/132.png">
+<meta property="article:published_time" content="2026-09-21T07:22:15.000Z">
+<meta property="article:modified_time" content="2026-09-21T07:40:48.168Z">
 <meta property="article:author" content="llppff573">
-<meta property="article:tag" content="Web安全">
-<meta property="article:tag" content="文件下载">
-<meta property="article:tag" content="文件上传">
+<meta property="article:tag" content="博客,笔记">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/113.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/129.png">
   
   
   
-  <title>unsafe file Download and Upload学习笔记 - llppff573</title>
+  <title>php反序列化漏洞学习笔记 - llppff573</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -316,7 +308,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="unsafe file Download and Upload学习笔记"></span>
+            <span id="subtitle" data-typed-text="php反序列化漏洞学习笔记"></span>
           
         </div>
 
@@ -327,8 +319,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-09-19 12:34" pubdate>
-          2026年9月19日 下午
+        <time datetime="2026-09-21 15:22" pubdate>
+          2026年9月21日 下午
         </time>
       </span>
     
@@ -339,7 +331,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k 字
+          1.9k 字
         
       </span>
     
@@ -350,7 +342,7 @@
         
         
         
-          19 分钟
+          16 分钟
         
       </span>
     
@@ -389,115 +381,63 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">unsafe file Download and Upload学习笔记</h1>
+            <h1 id="seo-header">php反序列化漏洞学习笔记</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="unsafe-file-Download-and-Upload学习笔记"><a href="#unsafe-file-Download-and-Upload学习笔记" class="headerlink" title="unsafe file Download and Upload学习笔记"></a>unsafe file Download and Upload学习笔记</h1><h2 id="一、漏洞综述"><a href="#一、漏洞综述" class="headerlink" title="一、漏洞综述"></a>一、漏洞综述</h2><p>不安全文件操作漏洞分为 <strong>Unsafe File Download（不安全文件下载）</strong> 与 <strong>Unsafe File Upload（不安全文件上传）</strong>，属于Web高频高危漏洞。成因是对用户可控文件参数、文件内容、后缀校验不严，攻击者可读取服务器敏感文件或上传恶意脚本，造成信息泄露、服务器被控制。</p>
-<p>两者简单区分：文件下载是<strong>读文件</strong>；文件上传是<strong>写文件</strong>，实战中经常组合利用。</p>
-<h2 id="Unsafe-File-Download-不安全文件下载"><a href="#Unsafe-File-Download-不安全文件下载" class="headerlink" title="Unsafe File Download 不安全文件下载"></a>Unsafe File Download 不安全文件下载</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理:"></a>原理:</h3><p>后端直接接收前端<code>filename</code>&#x2F;<code>file</code>&#x2F;<code>path</code>参数，拼接路径读取文件，无目录限制与白名单，攻击者利用<strong>目录遍历（路径穿越）</strong>跳出业务目录，读取服务器任意本地文件。</p>
-<h3 id="实验内容："><a href="#实验内容：" class="headerlink" title="实验内容："></a>实验内容：</h3><ol>
-<li><p>打开对应界面，随便点击一个图片进行下载，观察其url，实际是把文件名传给后端并进行下载：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">http://localhost:84/vul/unsafedownload/execdownload.php?filename=ai.png<br></code></pre></td></tr></table></figure></li>
-<li><p>利用以上特性，再次构造以下payload去获取文件信息，</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">http://localhost:84/vul/unsafedownload/execdownload.php?filename=../../../../../../../../../../../Windows/System32/drivers/etc/hosts<br></code></pre></td></tr></table></figure>
-<p>访问该url后可以看到这个文件会被下载，效果如下：</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/113.png" srcset="/img/loading.gif" lazyload alt="文件下载效果" idth="700"/>
-利用该特性也可以下载其他路径的文件，原理都一样。
-</li>
-<li><p>常见绕过</p>
-</li>
-</ol>
-<ul>
-<li>URL编码：<code>..%2F</code>，双重编码<code>..%252F</code></li>
-<li>斜杠替换：<code>..\..\</code></li>
-<li>过滤替换绕过：<code>....//</code></li>
-<li>00截断：<code>../../etc/passwd%00.jpg</code>（仅PHP5.3及以下有效）</li>
-</ul>
-<ol start="4">
-<li>修复方案</li>
-<li>使用文件ID映射，前端只传ID，隐藏真实文件路径</li>
-<li>固定基础目录，校验真实路径不能跳出指定目录</li>
-<li>文件名白名单，只放行允许下载的文件</li>
-<li>用户输入不能直接传入<code>readfile</code>、<code>file_get_contents</code>等读取函数</li>
-</ol>
-<h2 id="Unsafe-File-Upload-不安全文件上传"><a href="#Unsafe-File-Upload-不安全文件上传" class="headerlink" title="Unsafe File Upload 不安全文件上传"></a>Unsafe File Upload 不安全文件上传</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>上传功能未校验文件后缀、MIME、文件内容，攻击者上传php&#x2F;jsp&#x2F;asp等WebShell，访问文件即可执行恶意代码，获取服务器权限。</p>
+                <h1 id="PHP反序列化漏洞学习笔记（Pikachu靶场版）"><a href="#PHP反序列化漏洞学习笔记（Pikachu靶场版）" class="headerlink" title="PHP反序列化漏洞学习笔记（Pikachu靶场版）"></a>PHP反序列化漏洞学习笔记（Pikachu靶场版）</h1><h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>PHP中<code>serialize()</code>序列化：把对象转换成可存储传输的字符串；<code>unserialize()</code>反序列化：将字符串还原成对象。<br>漏洞核心：<strong>用户可控的输入直接传入unserialize()函数，攻击者可以构造恶意序列化字符串，控制对象属性，触发类中的魔术方法，执行任意代码、读取文件等恶意行为。</strong></p>
 <blockquote>
-<p>利用条件：上传恶意文件 + 文件可被解析执行</p>
+<p>一句话总结：unserialize在解析恶意序列化串时，自动触发魔术方法，业务代码没有过滤用户传入的序列化数据。</p>
 </blockquote>
-<p>危险示例PHP代码</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">move_uploaded_file</span>(<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;file&#x27;</span>][<span class="hljs-string">&#x27;tmp_name&#x27;</span>],<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;file&#x27;</span>][<span class="hljs-string">&#x27;name&#x27;</span>]);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h3><h4 id="客户端check"><a href="#客户端check" class="headerlink" title="客户端check"></a>客户端check</h4><ol>
-<li>进入对应界面，选择非png图片类型的文件进行上传，发现前端会进行弹窗提示，效果如下：<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/114.png" srcset="/img/loading.gif" lazyload alt="文件上传提示弹窗" idth="700"/></li>
-</ol>
-<p>检查页面前端上传文件对应的代码，是在前端对上传的文件进行限制，后端并不参与文件的上传，如果是图片文件就不会弹窗，不是图片文件才会弹窗。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/115.png" srcset="/img/loading.gif" lazyload alt="文件上传框检查" idth="700"/><br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/116.png" srcset="/img/loading.gif" lazyload alt="文件上传前端代码" idth="700"/></p>
-<p>将上图中的检查出的代码中的</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">onchange=&quot;checkFileExt(this.value)&quot;<br></code></pre></td></tr></table></figure>
-<p>改为：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">onchange=&quot;&quot;<br></code></pre></td></tr></table></figure>
-<p>再次尝试文件上传，发现可以正常上传并保存在本地。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/117.png" srcset="/img/loading.gif" lazyload alt="文件上传成功" idth="700"/><br>我们修改url，利用刚才获取的路径，访问这个文件，并获取ipconfig信息。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">http://localhost:84/vul/unsafeupload/uploads/yijuhua.php?x=ipconfig<br></code></pre></td></tr></table></figure>
-<p>效果如下,乱码的原因是输出的内容与浏览器编码不一致。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/118.png" srcset="/img/loading.gif" lazyload alt="读取结果" idth="700"/></p>
-<h4 id="服务端check"><a href="#服务端check" class="headerlink" title="服务端check"></a>服务端check</h4><ol>
-<li><p>服务端与客户端最直接可见的区别就是，客户端在提交的时候就进行判断文件类型，二服务端在上传的时候进行文件类型判断。所以在上传时如果文件类型不符就会上传失败。</p>
-</li>
-<li><p>上传一个不可直接上传的文件，然后到bp找到这个抓包，并将错误的抓包发送到Repeater，将其中关于类型的部分修改为：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">image/png<br></code></pre></td></tr></table></figure>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/119.png" srcset="/img/loading.gif" lazyload alt="修改文件类型" idth="700"/>
-发送后再相应界面可以看到成功上传，效果如下：
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/120.png" srcset="/img/loading.gif" lazyload alt="修改文件类型上传成功" idth="700"/></li>
-</ol>
-<h4 id="getimagesize"><a href="#getimagesize" class="headerlink" title="getimagesize()"></a>getimagesize()</h4><ol>
-<li><p>打开对应页面，利用cmd，构造恶意木马图片，以下述代码为例：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">copy /b tset.jpg + yijuhua.php cccc.png<br></code></pre></td></tr></table></figure>
-<p>会在指定的对应文件夹下面生成一个cccc.png，效果如下：</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/121.png" srcset="/img/loading.gif" lazyload alt="木马图片制作" idth="700"/>
-</li>
-<li><p>将刚才制作的恶意木马图片上传到靶场，可以正常上传此文件。效果如下：</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/122.png" srcset="/img/loading.gif" lazyload alt="木马图片上传" idth="700"/>
-</li>
-<li><p>直接访问这个文件，恶意代码是不会执行的，只能看到对应的图片内容。我们可以利用文件包含漏洞来访问这个文件，使恶意代码被执行。</p>
-</li>
-</ol>
-<h3 id="3-2-常见绕过"><a href="#3-2-常见绕过" class="headerlink" title="3.2 常见绕过"></a>3.2 常见绕过</h3><ul>
-<li>黑名单绕过：<code>php3、php5、phtml、jspx</code>等后缀</li>
-<li>大小写绕过：<code>Shell.Php</code></li>
-<li>00截断上传：<code>shell.php%00.jpg</code>（低版本PHP）</li>
-<li>图片马：<code>copy 1.jpg+shell.php 2.jpg</code>，配合文件包含执行</li>
-<li>MIME绕过：抓包修改<code>Content-Type</code>为<code>image/jpeg</code></li>
+<h3 id="关键：PHP魔术方法"><a href="#关键：PHP魔术方法" class="headerlink" title="关键：PHP魔术方法"></a>关键：PHP魔术方法</h3><p>在对象创建、销毁、读取、赋值时自动调用，是反序列化漏洞的利用入口。</p>
+<ul>
+<li><code>__construct()</code>：对象创建时触发（new实例化）</li>
+<li><code>__destruct()</code>：对象销毁、脚本结束时触发（最常用利用点）</li>
+<li><code>__wakeup()</code>：unserialize()还原对象时优先触发，在__destruct之前执行</li>
+<li><code>__toString()</code>：对象被当作字符串使用时触发</li>
+<li><code>__get()</code>：读取不存在&#x2F;私有属性时触发</li>
+<li><code>__set()</code>：给不存在属性赋值触发</li>
+<li><code>__call()</code>：调用不存在方法触发</li>
 </ul>
-<h3 id="3-4-修复方案"><a href="#3-4-修复方案" class="headerlink" title="3.4 修复方案"></a>3.4 修复方案</h3><ol>
-<li><strong>白名单校验</strong>，仅允许jpg&#x2F;png&#x2F;gip&#x2F;zip等合法后缀</li>
-<li>多重校验：后缀 + MIME + 文件头</li>
-<li>文件上传后重命名，随机文件名+固定后缀</li>
-<li>上传目录关闭脚本执行权限</li>
-<li>文件存储到非web可访问目录</li>
+<h2 id="漏洞成因"><a href="#漏洞成因" class="headerlink" title="漏洞成因"></a>漏洞成因</h2><ol>
+<li>外部可控参数直接传入<code>unserialize()</code>，未做校验、白名单限制</li>
+<li>代码中存在可利用的类，类的魔术方法里有危险操作（文件读写、命令执行）</li>
+<li>攻击者可以控制类里面的成员变量，修改魔术方法执行的参数</li>
+<li>依赖POP链：没有直接可用魔术方法时，利用多个类的方法依次调用，构造调用链执行恶意逻辑</li>
 </ol>
-<h2 id="四、漏洞对比-联动利用"><a href="#四、漏洞对比-联动利用" class="headerlink" title="四、漏洞对比&amp;联动利用"></a>四、漏洞对比&amp;联动利用</h2><table>
-<thead>
-<tr>
-<th>漏洞类型</th>
-<th>行为</th>
-<th>危害</th>
-<th>核心条件</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>不安全文件下载</td>
-<td>读取文件</td>
-<td>源码&#x2F;配置泄露</td>
-<td>可控路径，无目录限制</td>
-</tr>
-<tr>
-<td>不安全文件上传</td>
-<td>写入文件</td>
-<td>上传木马、代码执行</td>
-<td>校验缺失，文件可解析</td>
-</tr>
-</tbody></table>
-<p>联动：上传图片马，借助文件下载&#x2F;文件包含漏洞执行木马，拿到权限。</p>
+<blockquote>
+<p>区分：</p>
+<ul>
+<li>普通反序列化：直接魔术方法触发利用</li>
+<li>POP链（Property Oriented Programming）：链式调用，没有直接危险函数，靠多个类属性、方法串联形成攻击链路</li>
+</ul>
+</blockquote>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><ol>
+<li>进入对应页面，在输入框中随机输入，页面只会反馈：大兄弟,来点劲爆点儿的!<br>所以我们要构造正确的序列化数据。构造一个ser.php：<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-meta">class A&#123;</span><br><span class="hljs-meta">    public $test=&quot;pikachu&quot;;</span><br><span class="hljs-meta">&#125;</span><br><span class="hljs-meta"></span><br><span class="hljs-meta">$s=new A(); //创建一个对象</span><br><span class="hljs-meta">$serdata = serialize($s); //把这个对象进行序列化</span><br><span class="hljs-meta">echo $serdata;</span><br><span class="hljs-meta"></span><br><span class="hljs-meta">echo &#x27;&lt;br&gt;&#x27;;</span><br><span class="hljs-meta">$u=unserialize($serdata);</span><br><span class="hljs-meta">echo $u-&gt;test;</span><br><span class="hljs-meta"></span><br><span class="hljs-meta">class S&#123;</span><br><span class="hljs-meta">    var $test = &quot;&lt;script&gt;alert(&#x27;xss&#x27;)&lt;/script&gt;&quot;;</span><br><span class="hljs-meta">&#125;</span><br><span class="hljs-meta"></span><br><span class="hljs-meta">echo &#x27;&lt;br&gt;&#x27;;</span><br><span class="hljs-meta">$a = new S();</span><br><span class="hljs-meta">echo serialize($a);</span><br><span class="hljs-meta">?&gt;</span><br><br></code></pre></td></tr></table></figure>
+先将最后一段进行注释，然后在页面访问这个文件，<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">http://localhost:84/test/ser.php<br></code></pre></td></tr></table></figure>
+可以获取对象序列化的结果，反序列化后就是：pikachu，效果如下：<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/129.png" srcset="/img/loading.gif" lazyload alt="ser文件访问" idth="700"/></li>
+</ol>
+<p>我们再将前面的一段注释掉，刚才注释的部分恢复，再次访问，页面会进行弹窗：<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/130.png" srcset="/img/loading.gif" lazyload alt="ser文件访问弹窗" idth="700"/><br>查看页面源码就可以获得序列化完成的内容<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/131.png" srcset="/img/loading.gif" lazyload alt="页面源码" idth="700"/><br>然后复制这段内容，在页面进行输入，后提交，仍然会有对应弹窗。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/132.png" srcset="/img/loading.gif" lazyload alt="页面弹窗" idth="700"/><br>页面：<code>vul/unserialize/unserialize.php</code></p>
+<h2 id="序列化字符串格式解析"><a href="#序列化字符串格式解析" class="headerlink" title="序列化字符串格式解析"></a>序列化字符串格式解析</h2><p><code>O:1:&quot;S&quot;:1:&#123;s:4:&quot;test&quot;;s:10:&quot;phpinfo();&quot;;&#125;</code></p>
+<ul>
+<li>O：Object 对象</li>
+<li>1：类名字符串长度</li>
+<li>“S”：类名</li>
+<li>1：对象内属性个数</li>
+<li>s：string字符串，4为属性名长度，test属性名；后面是属性值</li>
+</ul>
+<h3 id="常用payload"><a href="#常用payload" class="headerlink" title="常用payload"></a>常用payload</h3><ol>
+<li>phpinfo探测<br><code>O:1:&quot;S&quot;:1:&#123;s:4:&quot;test&quot;;s:10:&quot;phpinfo();&quot;;&#125;</code></li>
+<li>执行系统命令<br><code>O:1:&quot;S&quot;:1:&#123;s:4:&quot;test&quot;;s:12:&quot;system(&#39;whoami&#39;);&quot;;&#125;</code></li>
+</ol>
+<h2 id="防御修复方案"><a href="#防御修复方案" class="headerlink" title="防御修复方案"></a>防御修复方案</h2><ol>
+<li>**绝对不要将用户可控数据直接传入unserialize()**，最根本防护</li>
+<li>如果业务必须反序列化：使用白名单，反序列化前校验对象类名，只允许指定安全类</li>
+<li>禁止魔术方法中使用危险函数（eval、system等）</li>
+<li>使用安全的数据格式替代序列化：JSON（json_encode&#x2F;json_decode），不存在对象魔术方法触发风险</li>
+<li>升级PHP版本，关注反序列化相关CVE，禁止反序列化不可信数据</li>
+</ol>
 
                 
               </div>
@@ -507,17 +447,6 @@
               <div class="post-metas my-3">
   
   
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/Web%E5%AE%89%E5%85%A8/" class="print-no-link">#Web安全</a>
-      
-        <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/" class="print-no-link">#文件下载</a>
-      
-        <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" class="print-no-link">#文件上传</a>
-      
-    </div>
-  
 </div>
 
 
@@ -526,8 +455,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>unsafe file Download and Upload学习笔记</div>
-      <div>https://llppff573.github.io/2026/09/19/filedownload学习笔记/</div>
+      <div>php反序列化漏洞学习笔记</div>
+      <div>https://llppff573.github.io/2026/09/21/php反序列化漏洞学习笔记/</div>
     </div>
     <div class="license-meta">
       
@@ -539,7 +468,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年9月19日</div>
+          <div>2026年9月21日</div>
         </div>
       
       
@@ -571,9 +500,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/09/21/permission%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="Over permission学习笔记">
+                      <a href="/2026/09/21/SSRF%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="SSRF漏洞学习笔记">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Over permission学习笔记</span>
+                        <span class="hidden-mobile">SSRF漏洞学习笔记</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -581,8 +510,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/09/18/file%20Inclusion%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="file Inclusion学习笔记">
-                        <span class="hidden-mobile">file Inclusion学习笔记</span>
+                      <a href="/2026/09/21/permission%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="Over permission学习笔记">
+                        <span class="hidden-mobile">Over permission学习笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

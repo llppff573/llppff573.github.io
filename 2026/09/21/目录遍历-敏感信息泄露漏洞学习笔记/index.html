@@ -19,35 +19,27 @@
   <meta name="author" content="llppff573">
   <meta name="keywords" content="博客,笔记">
   
-    <meta name="description" content="unsafe file Download and Upload学习笔记一、漏洞综述不安全文件操作漏洞分为 Unsafe File Download（不安全文件下载） 与 Unsafe File Upload（不安全文件上传），属于Web高频高危漏洞。成因是对用户可控文件参数、文件内容、后缀校验不严，攻击者可读取服务器敏感文件或上传恶意脚本，造成信息泄露、服务器被控制。 两者简单区分：文件下载是读文">
+    <meta name="description" content="目录遍历&amp;敏感信息泄露漏洞原理目录遍历（路径穿越）也叫路径穿越漏洞。程序将用户可控参数直接拼接为文件路径，没有对输入做过滤，攻击者使用..&#x2F;向上跳转目录，脱离网站根目录，读取服务器上任意位置文件。核心一句话：可控文件路径 + 未过滤..&#x2F;，跳出web目录读取其他文件 敏感信息泄露网站、服务器因配置不当，直接对外暴露敏感资源，不需要目录遍历也能直接访问，泄露源码、备份文件、配置、日">
 <meta property="og:type" content="article">
-<meta property="og:title" content="unsafe file Download and Upload学习笔记">
-<meta property="og:url" content="https://llppff573.github.io/2026/09/19/filedownload%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:title" content="目录遍历 敏感信息泄露漏洞学习笔记">
+<meta property="og:url" content="https://llppff573.github.io/2026/09/21/%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86-%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E6%B3%84%E9%9C%B2%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="llppff573">
-<meta property="og:description" content="unsafe file Download and Upload学习笔记一、漏洞综述不安全文件操作漏洞分为 Unsafe File Download（不安全文件下载） 与 Unsafe File Upload（不安全文件上传），属于Web高频高危漏洞。成因是对用户可控文件参数、文件内容、后缀校验不严，攻击者可读取服务器敏感文件或上传恶意脚本，造成信息泄露、服务器被控制。 两者简单区分：文件下载是读文">
+<meta property="og:description" content="目录遍历&amp;敏感信息泄露漏洞原理目录遍历（路径穿越）也叫路径穿越漏洞。程序将用户可控参数直接拼接为文件路径，没有对输入做过滤，攻击者使用..&#x2F;向上跳转目录，脱离网站根目录，读取服务器上任意位置文件。核心一句话：可控文件路径 + 未过滤..&#x2F;，跳出web目录读取其他文件 敏感信息泄露网站、服务器因配置不当，直接对外暴露敏感资源，不需要目录遍历也能直接访问，泄露源码、备份文件、配置、日">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/113.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/114.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/115.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/116.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/117.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/118.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/119.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/120.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/121.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/122.png">
-<meta property="article:published_time" content="2026-09-19T04:34:42.000Z">
-<meta property="article:modified_time" content="2026-09-21T03:21:14.761Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/138.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/139.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/140.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/141.png">
+<meta property="article:published_time" content="2026-09-21T08:44:28.000Z">
+<meta property="article:modified_time" content="2026-09-21T09:51:52.189Z">
 <meta property="article:author" content="llppff573">
-<meta property="article:tag" content="Web安全">
-<meta property="article:tag" content="文件下载">
-<meta property="article:tag" content="文件上传">
+<meta property="article:tag" content="博客,笔记">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/113.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/138.png">
   
   
   
-  <title>unsafe file Download and Upload学习笔记 - llppff573</title>
+  <title>目录遍历 敏感信息泄露漏洞学习笔记 - llppff573</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -316,7 +308,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="unsafe file Download and Upload学习笔记"></span>
+            <span id="subtitle" data-typed-text="目录遍历 敏感信息泄露漏洞学习笔记"></span>
           
         </div>
 
@@ -327,8 +319,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-09-19 12:34" pubdate>
-          2026年9月19日 下午
+        <time datetime="2026-09-21 16:44" pubdate>
+          2026年9月21日 下午
         </time>
       </span>
     
@@ -339,7 +331,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k 字
+          1.4k 字
         
       </span>
     
@@ -350,7 +342,7 @@
         
         
         
-          19 分钟
+          12 分钟
         
       </span>
     
@@ -389,115 +381,76 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">unsafe file Download and Upload学习笔记</h1>
+            <h1 id="seo-header">目录遍历 敏感信息泄露漏洞学习笔记</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="unsafe-file-Download-and-Upload学习笔记"><a href="#unsafe-file-Download-and-Upload学习笔记" class="headerlink" title="unsafe file Download and Upload学习笔记"></a>unsafe file Download and Upload学习笔记</h1><h2 id="一、漏洞综述"><a href="#一、漏洞综述" class="headerlink" title="一、漏洞综述"></a>一、漏洞综述</h2><p>不安全文件操作漏洞分为 <strong>Unsafe File Download（不安全文件下载）</strong> 与 <strong>Unsafe File Upload（不安全文件上传）</strong>，属于Web高频高危漏洞。成因是对用户可控文件参数、文件内容、后缀校验不严，攻击者可读取服务器敏感文件或上传恶意脚本，造成信息泄露、服务器被控制。</p>
-<p>两者简单区分：文件下载是<strong>读文件</strong>；文件上传是<strong>写文件</strong>，实战中经常组合利用。</p>
-<h2 id="Unsafe-File-Download-不安全文件下载"><a href="#Unsafe-File-Download-不安全文件下载" class="headerlink" title="Unsafe File Download 不安全文件下载"></a>Unsafe File Download 不安全文件下载</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理:"></a>原理:</h3><p>后端直接接收前端<code>filename</code>&#x2F;<code>file</code>&#x2F;<code>path</code>参数，拼接路径读取文件，无目录限制与白名单，攻击者利用<strong>目录遍历（路径穿越）</strong>跳出业务目录，读取服务器任意本地文件。</p>
-<h3 id="实验内容："><a href="#实验内容：" class="headerlink" title="实验内容："></a>实验内容：</h3><ol>
-<li><p>打开对应界面，随便点击一个图片进行下载，观察其url，实际是把文件名传给后端并进行下载：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">http://localhost:84/vul/unsafedownload/execdownload.php?filename=ai.png<br></code></pre></td></tr></table></figure></li>
-<li><p>利用以上特性，再次构造以下payload去获取文件信息，</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">http://localhost:84/vul/unsafedownload/execdownload.php?filename=../../../../../../../../../../../Windows/System32/drivers/etc/hosts<br></code></pre></td></tr></table></figure>
-<p>访问该url后可以看到这个文件会被下载，效果如下：</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/113.png" srcset="/img/loading.gif" lazyload alt="文件下载效果" idth="700"/>
-利用该特性也可以下载其他路径的文件，原理都一样。
-</li>
-<li><p>常见绕过</p>
-</li>
-</ol>
-<ul>
-<li>URL编码：<code>..%2F</code>，双重编码<code>..%252F</code></li>
-<li>斜杠替换：<code>..\..\</code></li>
-<li>过滤替换绕过：<code>....//</code></li>
-<li>00截断：<code>../../etc/passwd%00.jpg</code>（仅PHP5.3及以下有效）</li>
-</ul>
-<ol start="4">
-<li>修复方案</li>
-<li>使用文件ID映射，前端只传ID，隐藏真实文件路径</li>
-<li>固定基础目录，校验真实路径不能跳出指定目录</li>
-<li>文件名白名单，只放行允许下载的文件</li>
-<li>用户输入不能直接传入<code>readfile</code>、<code>file_get_contents</code>等读取函数</li>
-</ol>
-<h2 id="Unsafe-File-Upload-不安全文件上传"><a href="#Unsafe-File-Upload-不安全文件上传" class="headerlink" title="Unsafe File Upload 不安全文件上传"></a>Unsafe File Upload 不安全文件上传</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>上传功能未校验文件后缀、MIME、文件内容，攻击者上传php&#x2F;jsp&#x2F;asp等WebShell，访问文件即可执行恶意代码，获取服务器权限。</p>
+                <h1 id="目录遍历-敏感信息泄露"><a href="#目录遍历-敏感信息泄露" class="headerlink" title="目录遍历&amp;敏感信息泄露"></a>目录遍历&amp;敏感信息泄露</h1><h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><h3 id="目录遍历（路径穿越）"><a href="#目录遍历（路径穿越）" class="headerlink" title="目录遍历（路径穿越）"></a>目录遍历（路径穿越）</h3><p>也叫路径穿越漏洞。程序将用户可控参数直接拼接为文件路径，没有对输入做过滤，攻击者使用<code>../</code>向上跳转目录，脱离网站根目录，读取服务器上任意位置文件。<br>核心一句话：<strong>可控文件路径 + 未过滤..&#x2F;，跳出web目录读取其他文件</strong></p>
+<h3 id="敏感信息泄露"><a href="#敏感信息泄露" class="headerlink" title="敏感信息泄露"></a>敏感信息泄露</h3><p>网站、服务器因配置不当，直接对外暴露敏感资源，不需要目录遍历也能直接访问，泄露源码、备份文件、配置、日志等信息。<br>核心一句话：<strong>服务器配置失误，敏感文件&#x2F;目录可被外部直接访问下载</strong></p>
 <blockquote>
-<p>利用条件：上传恶意文件 + 文件可被解析执行</p>
+<p>两者经常关联：目录遍历用来读取任意敏感文件；敏感信息泄露是直接暴露文件。</p>
 </blockquote>
-<p>危险示例PHP代码</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">move_uploaded_file</span>(<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;file&#x27;</span>][<span class="hljs-string">&#x27;tmp_name&#x27;</span>],<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;file&#x27;</span>][<span class="hljs-string">&#x27;name&#x27;</span>]);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h3><h4 id="客户端check"><a href="#客户端check" class="headerlink" title="客户端check"></a>客户端check</h4><ol>
-<li>进入对应界面，选择非png图片类型的文件进行上传，发现前端会进行弹窗提示，效果如下：<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/114.png" srcset="/img/loading.gif" lazyload alt="文件上传提示弹窗" idth="700"/></li>
+<h2 id="漏洞成因"><a href="#漏洞成因" class="headerlink" title="漏洞成因"></a>漏洞成因</h2><h3 id="目录遍历"><a href="#目录遍历" class="headerlink" title="目录遍历"></a>目录遍历</h3><ol>
+<li>文件读取、下载功能，文件名参数用户可控</li>
+<li>直接拼接用户输入到文件路径，未过滤<code>../</code>、<code>..\</code></li>
+<li>没有限制文件访问在网站根目录内（没有路径规范化、白名单限制）</li>
 </ol>
-<p>检查页面前端上传文件对应的代码，是在前端对上传的文件进行限制，后端并不参与文件的上传，如果是图片文件就不会弹窗，不是图片文件才会弹窗。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/115.png" srcset="/img/loading.gif" lazyload alt="文件上传框检查" idth="700"/><br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/116.png" srcset="/img/loading.gif" lazyload alt="文件上传前端代码" idth="700"/></p>
-<p>将上图中的检查出的代码中的</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">onchange=&quot;checkFileExt(this.value)&quot;<br></code></pre></td></tr></table></figure>
-<p>改为：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">onchange=&quot;&quot;<br></code></pre></td></tr></table></figure>
-<p>再次尝试文件上传，发现可以正常上传并保存在本地。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/117.png" srcset="/img/loading.gif" lazyload alt="文件上传成功" idth="700"/><br>我们修改url，利用刚才获取的路径，访问这个文件，并获取ipconfig信息。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">http://localhost:84/vul/unsafeupload/uploads/yijuhua.php?x=ipconfig<br></code></pre></td></tr></table></figure>
-<p>效果如下,乱码的原因是输出的内容与浏览器编码不一致。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/118.png" srcset="/img/loading.gif" lazyload alt="读取结果" idth="700"/></p>
-<h4 id="服务端check"><a href="#服务端check" class="headerlink" title="服务端check"></a>服务端check</h4><ol>
-<li><p>服务端与客户端最直接可见的区别就是，客户端在提交的时候就进行判断文件类型，二服务端在上传的时候进行文件类型判断。所以在上传时如果文件类型不符就会上传失败。</p>
-</li>
-<li><p>上传一个不可直接上传的文件，然后到bp找到这个抓包，并将错误的抓包发送到Repeater，将其中关于类型的部分修改为：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">image/png<br></code></pre></td></tr></table></figure>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/119.png" srcset="/img/loading.gif" lazyload alt="修改文件类型" idth="700"/>
-发送后再相应界面可以看到成功上传，效果如下：
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/120.png" srcset="/img/loading.gif" lazyload alt="修改文件类型上传成功" idth="700"/></li>
+<h3 id="敏感信息泄露-1"><a href="#敏感信息泄露-1" class="headerlink" title="敏感信息泄露"></a>敏感信息泄露</h3><ol>
+<li>编辑器备份文件：<code>xxx.php.bak</code>、<code>xxx.php~</code></li>
+<li>压缩包备份：<code>www.zip</code>、<code>backup.rar</code></li>
+<li>目录索引开启（Apache&#x2F;Nginx自动列出文件夹文件）</li>
+<li>错误页面直接爆出源码、数据库路径、绝对路径</li>
+<li>.git、.svn版本控制文件夹未删除，源码直接下载</li>
 </ol>
-<h4 id="getimagesize"><a href="#getimagesize" class="headerlink" title="getimagesize()"></a>getimagesize()</h4><ol>
-<li><p>打开对应页面，利用cmd，构造恶意木马图片，以下述代码为例：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">copy /b tset.jpg + yijuhua.php cccc.png<br></code></pre></td></tr></table></figure>
-<p>会在指定的对应文件夹下面生成一个cccc.png，效果如下：</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/121.png" srcset="/img/loading.gif" lazyload alt="木马图片制作" idth="700"/>
-</li>
-<li><p>将刚才制作的恶意木马图片上传到靶场，可以正常上传此文件。效果如下：</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/122.png" srcset="/img/loading.gif" lazyload alt="木马图片上传" idth="700"/>
-</li>
-<li><p>直接访问这个文件，恶意代码是不会执行的，只能看到对应的图片内容。我们可以利用文件包含漏洞来访问这个文件，使恶意代码被执行。</p>
-</li>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h3 id="目录遍历-1"><a href="#目录遍历-1" class="headerlink" title="目录遍历"></a>目录遍历</h3><ol>
+<li>进入对应页面，点击第一个链接，观察url，发现前端实际是传了一个文件名到后台并读取：<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">http://localhost:84/vul/dir/dir_list.php?title=jarheads.php<br></code></pre></td></tr></table></figure></li>
+<li>我们可以利用..&#x2F;的特性回退到根目录然后读取一些文件，例如：<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html">http://localhost:84/vul/dir/dir_list.php?title=../../../../Windows/win.ini<br><br></code></pre></td></tr></table></figure>
+效果如下：<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/138.png" srcset="/img/loading.gif" lazyload alt="访问win文件" idth="700"/></li>
 </ol>
-<h3 id="3-2-常见绕过"><a href="#3-2-常见绕过" class="headerlink" title="3.2 常见绕过"></a>3.2 常见绕过</h3><ul>
-<li>黑名单绕过：<code>php3、php5、phtml、jspx</code>等后缀</li>
-<li>大小写绕过：<code>Shell.Php</code></li>
-<li>00截断上传：<code>shell.php%00.jpg</code>（低版本PHP）</li>
-<li>图片马：<code>copy 1.jpg+shell.php 2.jpg</code>，配合文件包含执行</li>
-<li>MIME绕过：抓包修改<code>Content-Type</code>为<code>image/jpeg</code></li>
+<h3 id="敏感信息泄露-2"><a href="#敏感信息泄露-2" class="headerlink" title="敏感信息泄露"></a>敏感信息泄露</h3><ol>
+<li><p>进入对应界面，检查页面源代码，发现其有注释的测试账号并没有在实际应用中删除，这只是一方面。</p>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/139.png" srcset="/img/loading.gif" lazyload alt="页面代码信息泄露" idth="700"/>
+</li>
+<li><p>进行登录，打开开发者选项，找到网络，找到对应的文件，其中有本次登录的cookie，账号和密码。</p>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/140.png" srcset="/img/loading.gif" lazyload alt="cookie" idth="700"/>
+</li>
+<li><p>我们也可以通过中间件配置来获取信息，访问<a target="_blank" rel="noopener" href="http://localhost:84/vul/csrf/%EF%BC%8C%E6%95%88%E6%9E%9C%E5%A6%82%E4%B8%8B%EF%BC%9A">http://localhost:84/vul/csrf/，效果如下：</a></p>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/141.png" srcset="/img/loading.gif" lazyload alt="中间件配置" idth="700"/>
+我们可以直接访问对应的目录信息。</li>
+</ol>
+<h2 id="漏洞利用方式"><a href="#漏洞利用方式" class="headerlink" title="漏洞利用方式"></a>漏洞利用方式</h2><ol>
+<li>目录遍历：读取系统文件、网站源码、数据库配置文件</li>
+<li>读取<code>.env</code>、<code>config.php</code>拿到数据库账号密码</li>
+<li>敏感信息泄露：下载网站源码、备份包、git源码</li>
+<li>配合报错页面获取服务器绝对路径，辅助其他漏洞利用</li>
+</ol>
+<h2 id="漏洞危害"><a href="#漏洞危害" class="headerlink" title="漏洞危害"></a>漏洞危害</h2><ol>
+<li>读取服务器本地敏感文件，泄露账号密码、密钥</li>
+<li>获取网站源代码，审计寻找更多漏洞</li>
+<li>拿到数据库配置，直接连接数据库拖库</li>
+<li>泄露服务器架构信息，作为后续渗透的信息铺垫</li>
+</ol>
+<h2 id="防御方案"><a href="#防御方案" class="headerlink" title="防御方案"></a>防御方案</h2><h3 id="目录遍历防御"><a href="#目录遍历防御" class="headerlink" title="目录遍历防御"></a>目录遍历防御</h3><ol>
+<li>输入过滤：过滤<code>../</code>、<code>..\</code>、<code>/</code>、<code>\</code>特殊字符</li>
+<li>使用<strong>白名单</strong>，只允许访问指定文件名</li>
+<li>使用<code>realpath()</code>规范化路径，校验文件是否在允许目录内</li>
+<li>限制文件访问目录，将访问路径固定在指定文件夹</li>
+</ol>
+<h3 id="敏感信息泄露防御"><a href="#敏感信息泄露防御" class="headerlink" title="敏感信息泄露防御"></a>敏感信息泄露防御</h3><ol>
+<li>上线前删除<code>.git</code>、<code>.svn</code>、各类bak备份文件、压缩包</li>
+<li>Nginx&#x2F;Apache关闭目录索引功能，禁止列出目录文件</li>
+<li>自定义错误页面，关闭PHP错误回显，不暴露绝对路径</li>
+<li>配置web服务器禁止访问<code>.git</code>、<code>.bak</code>等后缀文件</li>
+</ol>
+<h2 id="漏洞对比总结"><a href="#漏洞对比总结" class="headerlink" title="漏洞对比总结"></a>漏洞对比总结</h2><ul>
+<li>文件包含：读取并<strong>执行</strong>PHP等脚本文件</li>
+<li>目录遍历：仅<strong>读取</strong>文件内容，不一定执行代码</li>
+<li>SSRF：服务器发起网络请求访问内网&#x2F;文件</li>
+<li>敏感信息泄露：直接暴露备份文件、源码，无需payload构造</li>
 </ul>
-<h3 id="3-4-修复方案"><a href="#3-4-修复方案" class="headerlink" title="3.4 修复方案"></a>3.4 修复方案</h3><ol>
-<li><strong>白名单校验</strong>，仅允许jpg&#x2F;png&#x2F;gip&#x2F;zip等合法后缀</li>
-<li>多重校验：后缀 + MIME + 文件头</li>
-<li>文件上传后重命名，随机文件名+固定后缀</li>
-<li>上传目录关闭脚本执行权限</li>
-<li>文件存储到非web可访问目录</li>
-</ol>
-<h2 id="四、漏洞对比-联动利用"><a href="#四、漏洞对比-联动利用" class="headerlink" title="四、漏洞对比&amp;联动利用"></a>四、漏洞对比&amp;联动利用</h2><table>
-<thead>
-<tr>
-<th>漏洞类型</th>
-<th>行为</th>
-<th>危害</th>
-<th>核心条件</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>不安全文件下载</td>
-<td>读取文件</td>
-<td>源码&#x2F;配置泄露</td>
-<td>可控路径，无目录限制</td>
-</tr>
-<tr>
-<td>不安全文件上传</td>
-<td>写入文件</td>
-<td>上传木马、代码执行</td>
-<td>校验缺失，文件可解析</td>
-</tr>
-</tbody></table>
-<p>联动：上传图片马，借助文件下载&#x2F;文件包含漏洞执行木马，拿到权限。</p>
+<pre><code class="hljs">
+</code></pre>
 
                 
               </div>
@@ -507,17 +460,6 @@
               <div class="post-metas my-3">
   
   
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/Web%E5%AE%89%E5%85%A8/" class="print-no-link">#Web安全</a>
-      
-        <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/" class="print-no-link">#文件下载</a>
-      
-        <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" class="print-no-link">#文件上传</a>
-      
-    </div>
-  
 </div>
 
 
@@ -526,8 +468,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>unsafe file Download and Upload学习笔记</div>
-      <div>https://llppff573.github.io/2026/09/19/filedownload学习笔记/</div>
+      <div>目录遍历 敏感信息泄露漏洞学习笔记</div>
+      <div>https://llppff573.github.io/2026/09/21/目录遍历-敏感信息泄露漏洞学习笔记/</div>
     </div>
     <div class="license-meta">
       
@@ -539,7 +481,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年9月19日</div>
+          <div>2026年9月21日</div>
         </div>
       
       
@@ -571,9 +513,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/09/21/permission%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="Over permission学习笔记">
+                      <a href="/2026/09/21/%E4%B8%8D%E5%AE%89%E5%85%A8%E7%9A%84url%E8%B7%B3%E8%BD%AC%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="不安全的url跳转漏洞学习笔记">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Over permission学习笔记</span>
+                        <span class="hidden-mobile">不安全的url跳转漏洞学习笔记</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -581,8 +523,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/09/18/file%20Inclusion%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="file Inclusion学习笔记">
-                        <span class="hidden-mobile">file Inclusion学习笔记</span>
+                      <a href="/2026/09/21/SSRF%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="SSRF漏洞学习笔记">
+                        <span class="hidden-mobile">SSRF漏洞学习笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

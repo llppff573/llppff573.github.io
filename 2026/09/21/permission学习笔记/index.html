@@ -19,35 +19,29 @@
   <meta name="author" content="llppff573">
   <meta name="keywords" content="博客,笔记">
   
-    <meta name="description" content="unsafe file Download and Upload学习笔记一、漏洞综述不安全文件操作漏洞分为 Unsafe File Download（不安全文件下载） 与 Unsafe File Upload（不安全文件上传），属于Web高频高危漏洞。成因是对用户可控文件参数、文件内容、后缀校验不严，攻击者可读取服务器敏感文件或上传恶意脚本，造成信息泄露、服务器被控制。 两者简单区分：文件下载是读文">
+    <meta name="description" content="越权漏洞学习笔记一、漏洞原理越权（Broken Access Control，失效的访问控制），分为水平越权、垂直越权。后端服务没有在服务端校验当前登录用户是否拥有访问目标资源的权限，仅依靠前端控制页面展示。攻击者修改请求参数，直接查看&#x2F;操作不属于自己的数据。  核心一句话：前端能藏按钮，但后端没做权限校验，直接信任传入的参数  1.水平越权（同角色，不同用户）同一权限等级的用户A，直接">
 <meta property="og:type" content="article">
-<meta property="og:title" content="unsafe file Download and Upload学习笔记">
-<meta property="og:url" content="https://llppff573.github.io/2026/09/19/filedownload%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:title" content="Over permission学习笔记">
+<meta property="og:url" content="https://llppff573.github.io/2026/09/21/permission%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="llppff573">
-<meta property="og:description" content="unsafe file Download and Upload学习笔记一、漏洞综述不安全文件操作漏洞分为 Unsafe File Download（不安全文件下载） 与 Unsafe File Upload（不安全文件上传），属于Web高频高危漏洞。成因是对用户可控文件参数、文件内容、后缀校验不严，攻击者可读取服务器敏感文件或上传恶意脚本，造成信息泄露、服务器被控制。 两者简单区分：文件下载是读文">
+<meta property="og:description" content="越权漏洞学习笔记一、漏洞原理越权（Broken Access Control，失效的访问控制），分为水平越权、垂直越权。后端服务没有在服务端校验当前登录用户是否拥有访问目标资源的权限，仅依靠前端控制页面展示。攻击者修改请求参数，直接查看&#x2F;操作不属于自己的数据。  核心一句话：前端能藏按钮，但后端没做权限校验，直接信任传入的参数  1.水平越权（同角色，不同用户）同一权限等级的用户A，直接">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/113.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/114.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/115.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/116.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/117.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/118.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/119.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/120.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/121.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/122.png">
-<meta property="article:published_time" content="2026-09-19T04:34:42.000Z">
-<meta property="article:modified_time" content="2026-09-21T03:21:14.761Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/123.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/124.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/125.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/126.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/127.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/128.png">
+<meta property="article:published_time" content="2026-09-21T06:53:16.000Z">
+<meta property="article:modified_time" content="2026-09-21T07:21:29.579Z">
 <meta property="article:author" content="llppff573">
-<meta property="article:tag" content="Web安全">
-<meta property="article:tag" content="文件下载">
-<meta property="article:tag" content="文件上传">
+<meta property="article:tag" content="博客,笔记">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/113.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/llppff573/blog-image/main/images/123.png">
   
   
   
-  <title>unsafe file Download and Upload学习笔记 - llppff573</title>
+  <title>Over permission学习笔记 - llppff573</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -316,7 +310,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="unsafe file Download and Upload学习笔记"></span>
+            <span id="subtitle" data-typed-text="Over permission学习笔记"></span>
           
         </div>
 
@@ -327,8 +321,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-09-19 12:34" pubdate>
-          2026年9月19日 下午
+        <time datetime="2026-09-21 14:53" pubdate>
+          2026年9月21日 下午
         </time>
       </span>
     
@@ -339,7 +333,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k 字
+          1.3k 字
         
       </span>
     
@@ -350,7 +344,7 @@
         
         
         
-          19 分钟
+          11 分钟
         
       </span>
     
@@ -389,115 +383,58 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">unsafe file Download and Upload学习笔记</h1>
+            <h1 id="seo-header">Over permission学习笔记</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="unsafe-file-Download-and-Upload学习笔记"><a href="#unsafe-file-Download-and-Upload学习笔记" class="headerlink" title="unsafe file Download and Upload学习笔记"></a>unsafe file Download and Upload学习笔记</h1><h2 id="一、漏洞综述"><a href="#一、漏洞综述" class="headerlink" title="一、漏洞综述"></a>一、漏洞综述</h2><p>不安全文件操作漏洞分为 <strong>Unsafe File Download（不安全文件下载）</strong> 与 <strong>Unsafe File Upload（不安全文件上传）</strong>，属于Web高频高危漏洞。成因是对用户可控文件参数、文件内容、后缀校验不严，攻击者可读取服务器敏感文件或上传恶意脚本，造成信息泄露、服务器被控制。</p>
-<p>两者简单区分：文件下载是<strong>读文件</strong>；文件上传是<strong>写文件</strong>，实战中经常组合利用。</p>
-<h2 id="Unsafe-File-Download-不安全文件下载"><a href="#Unsafe-File-Download-不安全文件下载" class="headerlink" title="Unsafe File Download 不安全文件下载"></a>Unsafe File Download 不安全文件下载</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理:"></a>原理:</h3><p>后端直接接收前端<code>filename</code>&#x2F;<code>file</code>&#x2F;<code>path</code>参数，拼接路径读取文件，无目录限制与白名单，攻击者利用<strong>目录遍历（路径穿越）</strong>跳出业务目录，读取服务器任意本地文件。</p>
-<h3 id="实验内容："><a href="#实验内容：" class="headerlink" title="实验内容："></a>实验内容：</h3><ol>
-<li><p>打开对应界面，随便点击一个图片进行下载，观察其url，实际是把文件名传给后端并进行下载：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">http://localhost:84/vul/unsafedownload/execdownload.php?filename=ai.png<br></code></pre></td></tr></table></figure></li>
-<li><p>利用以上特性，再次构造以下payload去获取文件信息，</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">http://localhost:84/vul/unsafedownload/execdownload.php?filename=../../../../../../../../../../../Windows/System32/drivers/etc/hosts<br></code></pre></td></tr></table></figure>
-<p>访问该url后可以看到这个文件会被下载，效果如下：</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/113.png" srcset="/img/loading.gif" lazyload alt="文件下载效果" idth="700"/>
-利用该特性也可以下载其他路径的文件，原理都一样。
-</li>
-<li><p>常见绕过</p>
-</li>
-</ol>
-<ul>
-<li>URL编码：<code>..%2F</code>，双重编码<code>..%252F</code></li>
-<li>斜杠替换：<code>..\..\</code></li>
-<li>过滤替换绕过：<code>....//</code></li>
-<li>00截断：<code>../../etc/passwd%00.jpg</code>（仅PHP5.3及以下有效）</li>
-</ul>
-<ol start="4">
-<li>修复方案</li>
-<li>使用文件ID映射，前端只传ID，隐藏真实文件路径</li>
-<li>固定基础目录，校验真实路径不能跳出指定目录</li>
-<li>文件名白名单，只放行允许下载的文件</li>
-<li>用户输入不能直接传入<code>readfile</code>、<code>file_get_contents</code>等读取函数</li>
-</ol>
-<h2 id="Unsafe-File-Upload-不安全文件上传"><a href="#Unsafe-File-Upload-不安全文件上传" class="headerlink" title="Unsafe File Upload 不安全文件上传"></a>Unsafe File Upload 不安全文件上传</h2><h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>上传功能未校验文件后缀、MIME、文件内容，攻击者上传php&#x2F;jsp&#x2F;asp等WebShell，访问文件即可执行恶意代码，获取服务器权限。</p>
+                <h1 id="越权漏洞学习笔记"><a href="#越权漏洞学习笔记" class="headerlink" title="越权漏洞学习笔记"></a>越权漏洞学习笔记</h1><h2 id="一、漏洞原理"><a href="#一、漏洞原理" class="headerlink" title="一、漏洞原理"></a>一、漏洞原理</h2><p>越权（Broken Access Control，失效的访问控制），分为<strong>水平越权</strong>、<strong>垂直越权</strong>。<br>后端服务没有在服务端校验当前登录用户是否拥有访问目标资源的权限，仅依靠前端控制页面展示。攻击者修改请求参数，直接查看&#x2F;操作不属于自己的数据。</p>
 <blockquote>
-<p>利用条件：上传恶意文件 + 文件可被解析执行</p>
+<p>核心一句话：<strong>前端能藏按钮，但后端没做权限校验，直接信任传入的参数</strong></p>
 </blockquote>
-<p>危险示例PHP代码</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><span class="hljs-title function_ invoke__">move_uploaded_file</span>(<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;file&#x27;</span>][<span class="hljs-string">&#x27;tmp_name&#x27;</span>],<span class="hljs-variable">$_FILES</span>[<span class="hljs-string">&#x27;file&#x27;</span>][<span class="hljs-string">&#x27;name&#x27;</span>]);<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="实验内容"><a href="#实验内容" class="headerlink" title="实验内容"></a>实验内容</h3><h4 id="客户端check"><a href="#客户端check" class="headerlink" title="客户端check"></a>客户端check</h4><ol>
-<li>进入对应界面，选择非png图片类型的文件进行上传，发现前端会进行弹窗提示，效果如下：<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/114.png" srcset="/img/loading.gif" lazyload alt="文件上传提示弹窗" idth="700"/></li>
+<h3 id="1-水平越权（同角色，不同用户）"><a href="#1-水平越权（同角色，不同用户）" class="headerlink" title="1.水平越权（同角色，不同用户）"></a>1.水平越权（同角色，不同用户）</h3><p>同一权限等级的用户A，直接访问用户B的数据。<br>举例：用户A的订单url <code>?id=1001</code>，修改id&#x3D;1002，直接读取用户B的订单、个人信息。<br>本质：<strong>同级别用户之间数据隔离失效</strong></p>
+<h3 id="2-垂直越权（不同角色权限）"><a href="#2-垂直越权（不同角色权限）" class="headerlink" title="2.垂直越权（不同角色权限）"></a>2.垂直越权（不同角色权限）</h3><p>低权限用户，访问高权限用户功能。<br>举例：普通用户，直接调用管理员新增用户、删除用户接口。<br>本质：<strong>角色权限分级校验失效</strong></p>
+<h2 id="二、漏洞成因"><a href="#二、漏洞成因" class="headerlink" title="二、漏洞成因"></a>二、漏洞成因</h2><ol>
+<li>权限判断只写在前端，后端没有二次校验</li>
+<li>使用用户可控参数（id、uid、userid）直接查询数据库，未绑定session里的当前用户</li>
+<li>未做会话和资源的绑定，接口只校验是否登录，不校验该用户能不能操作这条数据</li>
+<li>权限配置错误，未最小权限原则</li>
 </ol>
-<p>检查页面前端上传文件对应的代码，是在前端对上传的文件进行限制，后端并不参与文件的上传，如果是图片文件就不会弹窗，不是图片文件才会弹窗。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/115.png" srcset="/img/loading.gif" lazyload alt="文件上传框检查" idth="700"/><br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/116.png" srcset="/img/loading.gif" lazyload alt="文件上传前端代码" idth="700"/></p>
-<p>将上图中的检查出的代码中的</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">onchange=&quot;checkFileExt(this.value)&quot;<br></code></pre></td></tr></table></figure>
-<p>改为：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">onchange=&quot;&quot;<br></code></pre></td></tr></table></figure>
-<p>再次尝试文件上传，发现可以正常上传并保存在本地。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/117.png" srcset="/img/loading.gif" lazyload alt="文件上传成功" idth="700"/><br>我们修改url，利用刚才获取的路径，访问这个文件，并获取ipconfig信息。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">http://localhost:84/vul/unsafeupload/uploads/yijuhua.php?x=ipconfig<br></code></pre></td></tr></table></figure>
-<p>效果如下,乱码的原因是输出的内容与浏览器编码不一致。<br><img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/118.png" srcset="/img/loading.gif" lazyload alt="读取结果" idth="700"/></p>
-<h4 id="服务端check"><a href="#服务端check" class="headerlink" title="服务端check"></a>服务端check</h4><ol>
-<li><p>服务端与客户端最直接可见的区别就是，客户端在提交的时候就进行判断文件类型，二服务端在上传的时候进行文件类型判断。所以在上传时如果文件类型不符就会上传失败。</p>
+<h2 id="3-水平越权实验"><a href="#3-水平越权实验" class="headerlink" title="3 水平越权实验"></a>3 水平越权实验</h2><ol>
+<li><p>打开对应界面，输入lucy&#x2F;123456，登录后可以查看个人信息，这是他的基本功能。点击查询信息后，观察其url，发现前端将用户名提交给后端，然后将信息在前端显示。</p>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/123.png" srcset="/img/loading.gif" lazyload alt="水平越权url" idth="700"/>
 </li>
-<li><p>上传一个不可直接上传的文件，然后到bp找到这个抓包，并将错误的抓包发送到Repeater，将其中关于类型的部分修改为：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">image/png<br></code></pre></td></tr></table></figure>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/119.png" srcset="/img/loading.gif" lazyload alt="修改文件类型" idth="700"/>
-发送后再相应界面可以看到成功上传，效果如下：
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/120.png" srcset="/img/loading.gif" lazyload alt="修改文件类型上传成功" idth="700"/></li>
+<li><p>只需要把username字段的值改为其他用户的，就可以查到对应的个人信息，例如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">http://localhost:84/vul/overpermission/op1/op1_mem.php?username=lili&amp;submit=%E7%82%B9%E5%87%BB%E6%9F%A5%E7%9C%8B%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF<br></code></pre></td></tr></table></figure>
+<p>访问后我们就可以看到lili的个人信息了。</p>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/124.png" srcset="/img/loading.gif" lazyload alt="水平越权url访问其他用户" idth="700"/></li>
 </ol>
-<h4 id="getimagesize"><a href="#getimagesize" class="headerlink" title="getimagesize()"></a>getimagesize()</h4><ol>
-<li><p>打开对应页面，利用cmd，构造恶意木马图片，以下述代码为例：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">copy /b tset.jpg + yijuhua.php cccc.png<br></code></pre></td></tr></table></figure>
-<p>会在指定的对应文件夹下面生成一个cccc.png，效果如下：</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/121.png" srcset="/img/loading.gif" lazyload alt="木马图片制作" idth="700"/>
+<h3 id="3-2-垂直越权实验"><a href="#3-2-垂直越权实验" class="headerlink" title="3.2 垂直越权实验"></a>3.2 垂直越权实验</h3><ol>
+<li><p>打开对应页面，登录超级管理员账号：admin&#x2F;123456。点击增加用户，然后随意填写用户信息并创建。</p>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/125.png" srcset="/img/loading.gif" lazyload alt="垂直越权创建新账号" idth="700"/>
 </li>
-<li><p>将刚才制作的恶意木马图片上传到靶场，可以正常上传此文件。效果如下：</p>
-<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/122.png" srcset="/img/loading.gif" lazyload alt="木马图片上传" idth="700"/>
+<li><p>在列表中可以发现新建的用户以及成功创建，在bp中找到对应请求，并发送到Repeater中。</p>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/126.png" srcset="/img/loading.gif" lazyload alt="垂直越权bp超级抓包" idth="700"/>
 </li>
-<li><p>直接访问这个文件，恶意代码是不会执行的，只能看到对应的图片内容。我们可以利用文件包含漏洞来访问这个文件，使恶意代码被执行。</p>
+<li><p>退出靶场登录的账号，登录普通管理员账号：pikachu&#x2F;000000。刷新后，在bp中获取对应的登录态。</p>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/127.png" srcset="/img/loading.gif" lazyload alt="垂直越权普通管理员登录态" idth="700"/>
 </li>
+<li><p>复制普通管理员的登录态后，将刚才抓包的登录态和用户信息进行修改，然后点击发送，然后点击跟踪重定向，可以发现新建的用户已经存在列表中。</p>
+<img src="https://raw.githubusercontent.com/llppff573/blog-image/main/images/128.png" srcset="/img/loading.gif" lazyload alt="垂直越权普通管理员越权创建用户" idth="700"/></li>
 </ol>
-<h3 id="3-2-常见绕过"><a href="#3-2-常见绕过" class="headerlink" title="3.2 常见绕过"></a>3.2 常见绕过</h3><ul>
-<li>黑名单绕过：<code>php3、php5、phtml、jspx</code>等后缀</li>
-<li>大小写绕过：<code>Shell.Php</code></li>
-<li>00截断上传：<code>shell.php%00.jpg</code>（低版本PHP）</li>
-<li>图片马：<code>copy 1.jpg+shell.php 2.jpg</code>，配合文件包含执行</li>
-<li>MIME绕过：抓包修改<code>Content-Type</code>为<code>image/jpeg</code></li>
+<h2 id="越权漏洞和其他漏洞区分"><a href="#越权漏洞和其他漏洞区分" class="headerlink" title="越权漏洞和其他漏洞区分"></a>越权漏洞和其他漏洞区分</h2><ul>
+<li>CSRF：利用用户已登录cookie，<strong>以用户身份执行操作</strong>，攻击者不知道cookie</li>
+<li>越权：攻击者自己有一个账号，<strong>修改参数访问别人资源</strong>，使用攻击者自己的session</li>
+<li>SQL注入：拼接SQL篡改查询语句；越权：SQL语句本身没问题，缺少权限判断</li>
 </ul>
-<h3 id="3-4-修复方案"><a href="#3-4-修复方案" class="headerlink" title="3.4 修复方案"></a>3.4 修复方案</h3><ol>
-<li><strong>白名单校验</strong>，仅允许jpg&#x2F;png&#x2F;gip&#x2F;zip等合法后缀</li>
-<li>多重校验：后缀 + MIME + 文件头</li>
-<li>文件上传后重命名，随机文件名+固定后缀</li>
-<li>上传目录关闭脚本执行权限</li>
-<li>文件存储到非web可访问目录</li>
+<h2 id="修复防御方案"><a href="#修复防御方案" class="headerlink" title="修复防御方案"></a>修复防御方案</h2><ol>
+<li><strong>服务端强制权限校验（最重要）</strong>，禁止前端控制权限</li>
+<li>查询数据库时，SQL条件必须带上当前会话的用户标识（session uid）</li>
+<li>基于RBAC角色权限模型，接口访问前校验角色</li>
+<li>禁止直接使用用户可控参数作为主键查询资源</li>
+<li>记录访问日志，监控异常访问（频繁遍历id）</li>
+<li>最小权限原则，不同角色分离资源</li>
 </ol>
-<h2 id="四、漏洞对比-联动利用"><a href="#四、漏洞对比-联动利用" class="headerlink" title="四、漏洞对比&amp;联动利用"></a>四、漏洞对比&amp;联动利用</h2><table>
-<thead>
-<tr>
-<th>漏洞类型</th>
-<th>行为</th>
-<th>危害</th>
-<th>核心条件</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>不安全文件下载</td>
-<td>读取文件</td>
-<td>源码&#x2F;配置泄露</td>
-<td>可控路径，无目录限制</td>
-</tr>
-<tr>
-<td>不安全文件上传</td>
-<td>写入文件</td>
-<td>上传木马、代码执行</td>
-<td>校验缺失，文件可解析</td>
-</tr>
-</tbody></table>
-<p>联动：上传图片马，借助文件下载&#x2F;文件包含漏洞执行木马，拿到权限。</p>
 
                 
               </div>
@@ -507,17 +444,6 @@
               <div class="post-metas my-3">
   
   
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/Web%E5%AE%89%E5%85%A8/" class="print-no-link">#Web安全</a>
-      
-        <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD/" class="print-no-link">#文件下载</a>
-      
-        <a href="/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/" class="print-no-link">#文件上传</a>
-      
-    </div>
-  
 </div>
 
 
@@ -526,8 +452,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>unsafe file Download and Upload学习笔记</div>
-      <div>https://llppff573.github.io/2026/09/19/filedownload学习笔记/</div>
+      <div>Over permission学习笔记</div>
+      <div>https://llppff573.github.io/2026/09/21/permission学习笔记/</div>
     </div>
     <div class="license-meta">
       
@@ -539,7 +465,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年9月19日</div>
+          <div>2026年9月21日</div>
         </div>
       
       
@@ -571,9 +497,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/09/21/permission%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="Over permission学习笔记">
+                      <a href="/2026/09/21/php%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="php反序列化漏洞学习笔记">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Over permission学习笔记</span>
+                        <span class="hidden-mobile">php反序列化漏洞学习笔记</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -581,8 +507,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/09/18/file%20Inclusion%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="file Inclusion学习笔记">
-                        <span class="hidden-mobile">file Inclusion学习笔记</span>
+                      <a href="/2026/09/19/filedownload%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="unsafe file Download and Upload学习笔记">
+                        <span class="hidden-mobile">unsafe file Download and Upload学习笔记</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
